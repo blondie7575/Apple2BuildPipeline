@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1FF8E5B6-1315-475A-9CD0-FCCF194EDB92</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Apple2BuildPipelineSample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1DDA97CB96411CB4840C13C24A3B935FA4FF778E</key>
+		<string>https://github.com/blondie7575/Apple2BuildPipeline</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Apple2BuildPipelineSample/Apple2BuildPipelineSample.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1DDA97CB96411CB4840C13C24A3B935FA4FF778E</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/blondie7575/Apple2BuildPipeline</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1DDA97CB96411CB4840C13C24A3B935FA4FF778E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1DDA97CB96411CB4840C13C24A3B935FA4FF778E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Apple2BuildPipeline</string>
+		</dict>
+	</array>
+</dict>
+</plist>

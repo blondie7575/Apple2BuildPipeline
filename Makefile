@@ -1,6 +1,6 @@
 #
 #  Makefile
-#  AssemblyTest
+#  Apple2BuildPipelineSample
 #
 #  Part of a sample build pipeline for Apple ][ software development
 #

@@ -7,67 +7,67 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		70D435A4199EE3A2001BFD9B /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		70D435A5199EE47A001BFD9B /* x.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = x.s; sourceTree = "<group>"; };
+		70E84C2E19B10B3100159159 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		70E84C2F19B10B3100159159 /* x.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = x.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		70D43599199EE38E001BFD9B = {
+		70E84C2319B10B0500159159 = {
 			isa = PBXGroup;
 			children = (
-				70D435A4199EE3A2001BFD9B /* Makefile */,
-				70D435A5199EE47A001BFD9B /* x.s */,
+				70E84C2E19B10B3100159159 /* Makefile */,
+				70E84C2F19B10B3100159159 /* x.s */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		70D4359E199EE38E001BFD9B /* AssemblyTest */ = {
+		70E84C2819B10B0600159159 /* Apple2BuildPipelineSample */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = 70D435A1199EE38E001BFD9B /* Build configuration list for PBXLegacyTarget "AssemblyTest" */;
+			buildConfigurationList = 70E84C2B19B10B0600159159 /* Build configuration list for PBXLegacyTarget "Apple2BuildPipelineSample" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
 			dependencies = (
 			);
-			name = AssemblyTest;
+			name = Apple2BuildPipelineSample;
 			passBuildSettingsInEnvironment = 1;
-			productName = AssemblyTest;
+			productName = Apple2BuildPipelineSample;
 		};
 /* End PBXLegacyTarget section */
 
 /* Begin PBXProject section */
-		70D4359A199EE38E001BFD9B /* Project object */ = {
+		70E84C2419B10B0500159159 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "One Girl, One Laptop Productions";
 				TargetAttributes = {
-					70D4359E199EE38E001BFD9B = {
+					70E84C2819B10B0600159159 = {
 						CreatedOnToolsVersion = 6.0;
 					};
 				};
 			};
-			buildConfigurationList = 70D4359D199EE38E001BFD9B /* Build configuration list for PBXProject "AssemblyTest" */;
+			buildConfigurationList = 70E84C2719B10B0500159159 /* Build configuration list for PBXProject "Apple2BuildPipelineSample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 70D43599199EE38E001BFD9B;
+			mainGroup = 70E84C2319B10B0500159159;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				70D4359E199EE38E001BFD9B /* AssemblyTest */,
+				70E84C2819B10B0600159159 /* Apple2BuildPipelineSample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
-		70D4359F199EE38E001BFD9B /* Debug */ = {
+		70E84C2919B10B0600159159 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -107,7 +107,7 @@
 			};
 			name = Debug;
 		};
-		70D435A0199EE38E001BFD9B /* Release */ = {
+		70E84C2A19B10B0600159159 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -141,7 +141,7 @@
 			};
 			name = Release;
 		};
-		70D435A2199EE38E001BFD9B /* Debug */ = {
+		70E84C2C19B10B0600159159 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUGGING_SYMBOLS = YES;
@@ -153,7 +153,7 @@
 			};
 			name = Debug;
 		};
-		70D435A3199EE38E001BFD9B /* Release */ = {
+		70E84C2D19B10B0600159159 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				OTHER_CFLAGS = "";
@@ -165,24 +165,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		70D4359D199EE38E001BFD9B /* Build configuration list for PBXProject "AssemblyTest" */ = {
+		70E84C2719B10B0500159159 /* Build configuration list for PBXProject "Apple2BuildPipelineSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				70D4359F199EE38E001BFD9B /* Debug */,
-				70D435A0199EE38E001BFD9B /* Release */,
+				70E84C2919B10B0600159159 /* Debug */,
+				70E84C2A19B10B0600159159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		70D435A1199EE38E001BFD9B /* Build configuration list for PBXLegacyTarget "AssemblyTest" */ = {
+		70E84C2B19B10B0600159159 /* Build configuration list for PBXLegacyTarget "Apple2BuildPipelineSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				70D435A2199EE38E001BFD9B /* Debug */,
-				70D435A3199EE38E001BFD9B /* Release */,
+				70E84C2C19B10B0600159159 /* Debug */,
+				70E84C2D19B10B0600159159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 70D4359A199EE38E001BFD9B /* Project object */;
+	rootObject = 70E84C2419B10B0500159159 /* Project object */;
 }
