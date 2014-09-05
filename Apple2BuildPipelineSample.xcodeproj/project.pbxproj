@@ -9,6 +9,8 @@
 /* Begin PBXFileReference section */
 		70E84C2E19B10B3100159159 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		70E84C2F19B10B3100159159 /* x.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = x.s; sourceTree = "<group>"; };
+		9D084B2119B6AC2F0070589C /* head.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = head.mk; path = make/head.mk; sourceTree = "<group>"; };
+		9D084B2219B6AC540070589C /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = tail.mk; path = make/tail.mk; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -17,7 +19,17 @@
 			children = (
 				70E84C2E19B10B3100159159 /* Makefile */,
 				70E84C2F19B10B3100159159 /* x.s */,
+				9D084B1F19B6ABE40070589C /* make */,
 			);
+			sourceTree = "<group>";
+		};
+		9D084B1F19B6ABE40070589C /* make */ = {
+			isa = PBXGroup;
+			children = (
+				9D084B2119B6AC2F0070589C /* head.mk */,
+				9D084B2219B6AC540070589C /* tail.mk */,
+			);
+			name = make;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
