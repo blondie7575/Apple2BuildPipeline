@@ -1,5 +1,5 @@
 ;
-;  x.s
+;  exampleAsm.s
 ;  Apple2BuildPipelineSample
 ;
 ;  Part of a sample build pipeline for Apple ][ software development
@@ -10,8 +10,7 @@
 ;  http://www.quinndunki.com/blondihacks
 ;
 
-
-.org $6000
+    .export _asmFunc
 
 ; Reserved locations
 
@@ -31,9 +30,9 @@ COUT = $fded
 
 
 
-; Main
+; _asmFunc
 
-main:
+_asmFunc:
 	lda #CHAR_FLASH
 	sta INVERSE
 

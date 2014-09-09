@@ -1,0 +1,158 @@
+#!/bin/sh
+
+if [ $# -lt 4 ]
+then
+    echo USAGE: $0 '<AppleCommander> <machine> <diskimage> <binary>'
+    exit 1
+fi
+
+
+APPLECOMMANDER=$1
+MACHINE=$2
+DISKIMAGE=$3
+PROGRAM=$4
+
+if [ ! -f "$PROGRAM" ]
+then
+    echo "Cannot file executable $PROGRAM"
+    exit 1
+fi
+
+case "$MACHINE" in
+    apple2)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=1
+        RENAMELOADER=0
+        DELETEBASIC=0
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2enh)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=1
+        RENAMELOADER=0
+        DELETEBASIC=0
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2-dos33)
+        TEMPLATE="make/dos33_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=0
+        DELETEBASIC=0
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2enh-dos33)
+        TEMPLATE="make/dos33_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=0
+        DELETEBASIC=0
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2-system)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=1
+        RENAMELOADER=0
+        DELETEBASIC=1
+        HASHEADER=0
+        FILETYPE="sys"
+        TARGETFILE=`basename $PROGRAM`.system
+        ;;
+
+    apple2enh-system)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=1
+        RENAMELOADER=0
+        DELETEBASIC=1
+        HASHEADER=0
+        FILETYPE="sys"
+        TARGETFILE=`basename $PROGRAM`.system
+        ;;
+
+    apple2-loader)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=1
+        DELETEBASIC=1
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2-reboot)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=1
+        DELETEBASIC=1
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2enh-loader)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=1
+        DELETEBASIC=1
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    apple2enh-reboot)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=1
+        DELETEBASIC=1
+        HASHEADER=1
+        FILETYPE="bin"
+        TARGETFILE=`basename $PROGRAM`
+        ;;
+
+    *)
+        echo "Invalid machine type $MACHINE"
+        exit 1
+        ;;
+esac
+
+if [ ! -f "$TEMPLATE" ]
+then
+    echo "Cannot file template disk image $TEMPLATE"
+    exit 1
+fi
+
+cp "$TEMPLATE" "$DISKIMAGE"
+
+if [ $DELETELOADER -eq 1 ]
+then
+    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
+fi
+
+if [ $RENAMELOADER -eq 1 ]
+then
+    java -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE".system sys
+    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
+fi
+
+if [ $DELETEBASIC -eq 1 ]
+then
+    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" BASIC.SYSTEM
+fi
+
+if [ $HASHEADER -eq 1 ]
+then
+    STARTADDR=`od -t x2 -N 2 < "$PROGRAM" | head -1 | awk '{print $2}'`
+    dd if="$PROGRAM" bs=4 skip=1 | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
+else
+    java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
+fi

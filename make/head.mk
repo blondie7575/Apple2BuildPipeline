@@ -16,6 +16,7 @@ CC65_BIN = /usr/local/bin
 
 CL65=$(CC65_BIN)/cl65
 CA65=$(CC65_BIN)/ca65
+CC65=$(CC65_BIN)/cc65
 
 AC=make/AppleCommander.jar
 
