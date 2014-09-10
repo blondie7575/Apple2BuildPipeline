@@ -10,8 +10,6 @@
 ;  http://www.quinndunki.com/blondihacks
 ;
 
-    .export _asmFunc
-
 ; Reserved locations
 
 INVERSE = $32
@@ -30,9 +28,9 @@ COUT = $fded
 
 
 
-; _asmFunc
+; Main
 
-_asmFunc:
+main:
 	lda #CHAR_FLASH
 	sta INVERSE
 

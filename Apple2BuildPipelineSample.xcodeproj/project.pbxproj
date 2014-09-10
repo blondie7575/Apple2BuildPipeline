@@ -8,10 +8,7 @@
 
 /* Begin PBXFileReference section */
 		70E84C2E19B10B3100159159 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		70E84C2F19B10B3100159159 /* exampleAsm.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = exampleAsm.s; sourceTree = "<group>"; };
-		9D084B2119B6AC2F0070589C /* head.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = head.mk; path = make/head.mk; sourceTree = "<group>"; };
-		9D084B2219B6AC540070589C /* tail.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = tail.mk; path = make/tail.mk; sourceTree = "<group>"; };
-		9DE27AEA19BBF98700727AFA /* exampleC.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = exampleC.c; sourceTree = "<group>"; };
+		70E84C2F19B10B3100159159 /* x.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = x.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -19,19 +16,8 @@
 			isa = PBXGroup;
 			children = (
 				70E84C2E19B10B3100159159 /* Makefile */,
-				70E84C2F19B10B3100159159 /* exampleAsm.s */,
-				9DE27AEA19BBF98700727AFA /* exampleC.c */,
-				9D084B1F19B6ABE40070589C /* make */,
+				70E84C2F19B10B3100159159 /* x.s */,
 			);
-			sourceTree = "<group>";
-		};
-		9D084B1F19B6ABE40070589C /* make */ = {
-			isa = PBXGroup;
-			children = (
-				9D084B2119B6AC2F0070589C /* head.mk */,
-				9D084B2219B6AC540070589C /* tail.mk */,
-			);
-			name = make;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +100,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -149,7 +135,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

@@ -31,8 +31,18 @@ ifneq ($(START_ADDR),)
     ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
         $(error You cannot change start address with this machine type)
     endif
-    LDFLAGS += --start-addr 0x$(START_ADDR)
+else
+    ifneq ($(filter $(MACHINE), apple2 apple2-dos33 apple2enh apple2enh-dos33),)
+    	START_ADDR=803
+    endif
+    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+    	START_ADDR=2000
+    endif
+    ifneq ($(filter $(MACHINE), apple2-loader apple2-reboot apple2enh-loader apple2enh-reboot),)
+    	START_ADDR=800
+    endif
 endif
+LDFLAGS += --start-addr 0x$(START_ADDR)
 
 ifneq ($(filter $(MACHINE), apple2 apple2enh apple2-dos33 apple2enh-dos33),)
     EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
@@ -64,10 +74,10 @@ $(PGM): $(OBJS)
 	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o $(PGM) $(OBJS)
 
 $(DISKIMAGE): $(PGM)
-	make/createDiskImage $(AC) $(MACHINE) $(DISKIMAGE) $(PGM)
+	make/createDiskImage $(AC) $(MACHINE) $(DISKIMAGE) $(PGM) "$(START_ADDR)"
 
 execute: $(DISKIMAGE)
-	osascript make/V2Make.scpt $(PROJECT_DIR) $(PGM) $(PROJECT_DIR)/DevApple.vii "$(EXECCMD)"
+	osascript make/V2Make.scpt $(PROJECT_DIR) $(PGM) $(PROJECT_DIR)/make/DevApple.vii "$(EXECCMD)"
 
 %.o:	%.c
 	$(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<

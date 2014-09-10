@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $# -lt 4 ]
+if [ $# -lt 5 ]
 then
     echo USAGE: $0 '<AppleCommander> <machine> <diskimage> <binary>'
     exit 1
@@ -11,6 +11,7 @@ APPLECOMMANDER=$1
 MACHINE=$2
 DISKIMAGE=$3
 PROGRAM=$4
+STARTADDR=`echo $5 | sed 's/^0*//'`
 
 if [ ! -f "$PROGRAM" ]
 then
@@ -151,8 +152,13 @@ fi
 
 if [ $HASHEADER -eq 1 ]
 then
-    STARTADDR=`od -t x2 -N 2 < "$PROGRAM" | head -1 | awk '{print $2}'`
-    dd if="$PROGRAM" bs=4 skip=1 | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
+    HDR_STARTADDR=`od -t x2 -N 2 < "$PROGRAM" | head -1 | awk '{print $2}' | sed 's/^0*//'`
+    if [ "$HDR_STARTADDR" = "$STARTADDR" ]
+    then
+       dd if="$PROGRAM" bs=4 skip=1 | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
+   else
+       java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR < "$PROGRAM"
+    fi
 else
     java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
 fi
