@@ -25,6 +25,12 @@ LINK_ARGS=
 
 EXECCMD=
 
+ALLTARGET=$(DISKIMAGE)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+    ALLTARGET=execute
+endif
+
 ifneq ($(START_ADDR),)
 # If the MACHINE is set to an option which does not support a variable start
 # address, then error.
@@ -32,6 +38,7 @@ ifneq ($(START_ADDR),)
         $(error You cannot change start address with this machine type)
     endif
 else
+    # If not set, then use the default for the config as per cc65 documentation
     ifneq ($(filter $(MACHINE), apple2 apple2-dos33 apple2enh apple2enh-dos33),)
     	START_ADDR=803
     endif
@@ -60,7 +67,7 @@ endif
 
 .PHONY: all execute clean
 	
-all: execute
+all: $(ALLTARGET)
 
 clean:
 	rm -f $(PGM)

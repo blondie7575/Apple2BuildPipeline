@@ -28,6 +28,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=15
         ;;
 
     apple2enh)
@@ -38,6 +39,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=15
         ;;
 
     apple2-dos33)
@@ -48,6 +50,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=30
         ;;
 
     apple2enh-dos33)
@@ -58,6 +61,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=30
         ;;
 
     apple2-system)
@@ -68,6 +72,7 @@ case "$MACHINE" in
         HASHEADER=0
         FILETYPE="sys"
         TARGETFILE=`basename $PROGRAM`.system
+        MAXFILENAMELEN=15
         ;;
 
     apple2enh-system)
@@ -78,6 +83,7 @@ case "$MACHINE" in
         HASHEADER=0
         FILETYPE="sys"
         TARGETFILE=`basename $PROGRAM`.system
+        MAXFILENAMELEN=15
         ;;
 
     apple2-loader)
@@ -88,6 +94,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=15
         ;;
 
     apple2-reboot)
@@ -98,6 +105,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=15
         ;;
 
     apple2enh-loader)
@@ -108,6 +116,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=15
         ;;
 
     apple2enh-reboot)
@@ -118,6 +127,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
+        MAXFILENAMELEN=8
         ;;
 
     *)
@@ -125,6 +135,12 @@ case "$MACHINE" in
         exit 1
         ;;
 esac
+
+if [ ${#TARGETFILE} -gt $MAXFILENAMELEN ]
+then
+    echo "The filename $TARGETFILE exceeds the max name length of the filesystem ($MAXFILENAMELEN)"
+    exit 1
+fi
 
 if [ ! -f "$TEMPLATE" ]
 then
@@ -141,7 +157,14 @@ fi
 
 if [ $RENAMELOADER -eq 1 ]
 then
-    java -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE".system sys
+    LOADERFILE=${TARGETFILE}.system
+    if [ ${#LOADERFILE} -gt $MAXFILENAMELEN ]
+    then
+        echo "The filename $LOADERFILE exceeds the max name length of the filesystem ($MAXFILENAMELEN)"
+        rm -f "$DISKIMAGE"
+        exit 1
+    fi
+    java -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$LOADERFILE" sys
     java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
 fi
 

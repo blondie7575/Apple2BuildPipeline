@@ -16,7 +16,7 @@ include make/head.mk
 # target, where in memory to put it, etc.
 
 # The name of your system or binary file to build goes here:
-PGM=example
+PGM=notaslon
 
 # Set the config you are building for.  See these pages for details:
 #   http://cc65.github.io/cc65/doc/apple2.html#s4
@@ -33,6 +33,7 @@ PGM=example
 #    MACHINE = apple2enh-system
 #    MACHINE = apple2enh-loader
 #    MACHINE = apple2enh-reboot
+MACHINE = apple2-loader
 
 # Uncomment and set this to your starting address in Apple ][ memory
 # if necessary:
