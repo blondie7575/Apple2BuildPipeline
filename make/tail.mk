@@ -12,6 +12,8 @@
 
 export PATH := $(PATH):$(CC65_BIN)
 
+CWD=$(shell pwd)
+
 C_OBJS=$(C_SRCS:.c=.o)
 C_DEPS=$(C_SRCS:.c=.u)
 ASM_OBJS=$(ASM_SRCS:.s=.o)
@@ -84,7 +86,7 @@ $(DISKIMAGE): $(PGM)
 	make/createDiskImage $(AC) $(MACHINE) $(DISKIMAGE) $(PGM) "$(START_ADDR)"
 
 execute: $(DISKIMAGE)
-	osascript make/V2Make.scpt $(PROJECT_DIR) $(PGM) $(PROJECT_DIR)/make/DevApple.vii "$(EXECCMD)"
+	osascript make/V2Make.scpt $(CWD) $(PGM) $(CWD)/make/DevApple.vii "$(EXECCMD)"
 
 %.o:	%.c
 	$(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<

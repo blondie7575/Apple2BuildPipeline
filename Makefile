@@ -16,7 +16,7 @@ include make/head.mk
 # target, where in memory to put it, etc.
 
 # The name of your system or binary file to build goes here:
-PGM=example
+PGM=___PACKAGENAME___
 
 # Set the config you are building for.  See these pages for details:
 #   http://cc65.github.io/cc65/doc/apple2.html#s4
