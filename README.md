@@ -1,7 +1,7 @@
 Apple2BuildPipeline
 ===================
 
-A build pipeline (with sample project) for making Apple \]\[ software on OS X.
+A build pipeline for making Apple \]\[ software on OS X.
 
 This project was built based on the one created by [Quinn Dunki](http://quinndunki.com/blondihacks/?p=1904) but it has been expanded to add the following features:
 
