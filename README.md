@@ -25,7 +25,7 @@ $ sudo make -f make/gcc.mak install
    4. Install the [Apple // project template](http://url.to.be.filled.in.once.I.have.it/)
    5. Start Xcode and create a new project by using File->New->Project...
    6. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
-   7. A dialog box with few options text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
+   7. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    8. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents foler is a reasonable option.  Click "Create".
    9. You will now have your project ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  If everything works, you should see "HELLO, WORLD!" on the emulator.  Press any key in the emulator to quit the executable.
    10. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
