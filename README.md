@@ -23,13 +23,15 @@ $ make -f make/gcc.mak
 $ sudo make -f make/gcc.mak install
 </pre>
    4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).  The package is not signed so your Mac probably will not install it because it is untrusted.  To override this, hold the "Option" key down and right click on the package and select "Open" in the contextual menu.  You should now get an alert saying the package is unsigned but there is now an "Open" button.  Click "Open" to start the installer.
-   5. Start Xcode and create a new project by using File->New->Project...
-   6. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
-   7. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
-   8. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents foler is a reasonable option.  Click "Create".
-   9. Your project is now ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  If everything works, you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
-   10. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
-   11. Change main.c and write more code in new C or assembly files until you have the program you always wanted to build...
+
+Everything you need is now installed.  To create a new Apple \]\[ project in Xcode:
+   1. Start Xcode and create a new project by using File->New->Project...
+   2. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
+   3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
+   4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents foler is a reasonable option.  Click "Create".
+   5. Your project is now ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  If everything works, you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
+   6. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
+   7. Change main.c and write more code in new C or assembly files until you have the program you always wanted to build...
 
 This build infrastructure can be used in a non-Mac environment.  You need cc65 and the instructions above for downloading and building it should be approximately correct for most UNIX-like environments.  From there, you can edit the Makefile and add new source files as described above.  Be sure to set PGM to the name of your executable in the Makefile.  When you build the project in a non-Mac environment, you should end up with a .dsk file but it will not try to execute that like it would on a Mac.  In theory, other emulators on the Mac or on other host systems could be added to the build infrastructure and feel free to add support for your favourite.
 
