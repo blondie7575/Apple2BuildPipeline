@@ -9,7 +9,7 @@ This project was built based on the one created by [Quinn Dunki](http://quinndun
    * Supports linking together multiple C and assembly files.  To add a new file to the project, just create a new *.c or *.s file in the project directory.
    * If you change a header file, the right source files will rebuild automatically.  Header file dependencies are generated during the build.
    * Supports all cc65 Apple configurations.  So, if you want to target enhanced Apple //e's running DOS 3.3, knock yourself out.  Just set the configuration you want in the Makefile and the build will do the right thing to create a disk image for that configuration.
-   * On Mac OS X, Virtual \]\[ will start when you build.  This works for all supported cc65 Apple configurations.
+   * On Mac OS X, Virtual \]\[ will start when you build and the emulator with execute your program.  This works for all supported cc65 Apple configurations.  Also, it uses a machine configuration which is stored in the make directory in your project.  That way, you can modify the machine configuration to be exactly the config you want to test under.
    * The Mac OS X deliverable is now an installer which will create an Xcode project template.  So, to start a new Apple \]\[ project in Xcode, select File->New->Project.  Among the iOS and OS X project templates, you will find the "Apple \]\[ Project" option.  Select that and you will have a new Apple \]\[ project ready to go.
 
 In order to use this infrastructure from Mac OS X, follow these instructions:
