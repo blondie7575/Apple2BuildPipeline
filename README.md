@@ -15,16 +15,13 @@ This project was built based on the one created by [Quinn Dunki](http://quinndun
 In order to use this infrastructure from Mac OS X, follow these instructions:
    1. Install Xcode from Apple.  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.
    2. [Download cc65 v2.13.3](ftp://ftp.musoftware.de/pub/uz/cc65/cc65-sources-2.13.3.tar.bz2).  The instructions assume that this file ended up in your Downloads folder in your home directory.
-   3. In a terminal, run the following commands:
-
-<pre>
+   3. In a terminal, run the following commands: <pre>
 $ cd ~/Downloads
 $ tar xvjf cc65-sources-2.13.3.tar.bz2
 $ cd cc65-2.13.3
 $ make -f make/gcc.mak
 $ sudo make -f make/gcc.mak install
 </pre>
-
    4. Install the [Apple // project template](http://url.to.be.filled.in.once.I.have.it/)
    5. Start Xcode and create a new project by using File->New->Project...
    6. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
