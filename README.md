@@ -13,7 +13,7 @@ This project was built based on the one created by [Quinn Dunki](http://quinndun
    * The Mac OS X deliverable is now an installer which will create an Xcode project template.  So, to start a new Apple \]\[ project in Xcode, select File->New->Project.  Among the iOS and OS X project templates, you will find the "Apple \]\[ Project" option.  Select that and you will have a new Apple \]\[ project ready to go.
 
 In order to use this infrastructure from Mac OS X, follow these instructions:
-   1. Install Xcode from Apple.  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.
+   1. Install Xcode from Apple.  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple \]\[ programs.
    2. Download cc65 v2.13.3 from ftp://ftp.musoftware.de/pub/uz/cc65/cc65-sources-2.13.3.tar.bz2  The instructions assume that this file ended up in your Downloads folder in your home directory.
    3. In a terminal, run the following commands: <pre>
 $ cd ~/Downloads
