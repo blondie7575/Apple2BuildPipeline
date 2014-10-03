@@ -22,7 +22,7 @@ $ cd cc65-2.13.3
 $ make -f make/gcc.mak
 $ sudo make -f make/gcc.mak install
 </pre>
-   4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).  The package is not signed so your Mac probably will not install it because it is untrusted.  To override this, hold the "Option" key down and right click on the package and select "Open" in the contextual menu.  You should now get an alert saying the package is unsigned but there is now an "Open" button.  Click "Open" to start the installer.
+   4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).
 
 Everything you need is now installed.  To create a new Apple \]\[ project in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
