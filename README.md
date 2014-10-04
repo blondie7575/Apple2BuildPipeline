@@ -14,14 +14,7 @@ This project was built based on the one created by [Quinn Dunki](http://quinndun
 
 In order to use this infrastructure from Mac OS X, follow these instructions:
    1. Install [Xcode from Apple](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&uo=4).  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple \]\[ programs.
-   2. Download cc65 v2.13.3 from ftp://ftp.musoftware.de/pub/uz/cc65/cc65-sources-2.13.3.tar.bz2  The instructions assume that this file ended up in your Downloads folder in your home directory.
-   3. In a terminal, run the following commands: <pre>
-$ cd ~/Downloads
-$ tar xvjf cc65-sources-2.13.3.tar.bz2
-$ cd cc65-2.13.3
-$ make -f make/gcc.mak
-$ sudo make -f make/gcc.mak install
-</pre>
+   2. Install the [cc65 v2.13.3 package](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/cc65.2.13.3.pkg).
    4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).
 
 Everything you need is now installed.  To create a new Apple \]\[ project in Xcode:
@@ -29,7 +22,7 @@ Everything you need is now installed.  To create a new Apple \]\[ project in Xco
    2. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
    3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents foler is a reasonable option.  Click "Create".
-   5. Your project is now ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  If everything works, you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
+   5. Your project is now ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  On your first build, you may be prompted by Mac OS X to install a Java runtime.  Java is required so if you get this prompt, you should install it and then retry the build in Xcode.  If everything works, you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
    6. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
    7. Change main.c and write more code in new C or assembly files until you have the program you always wanted to build...
 
