@@ -24,6 +24,7 @@ In order to use this infrastructure from Mac OS X, follow these instructions:
    4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).
 
 Your First Project:
+-------------------
 
 Everything you need is now installed.  To create a new Apple \]\[ project in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
