@@ -79,9 +79,11 @@ clean:
 	rm -f $(ASM_LSTS)
 	rm -f $(DISKIMAGE)
 
+createPackage:
+	pkg/createPackage
+
 cleanMacCruft:
-	rm -rf Apple2Template.pmdoc
-	rm -rf TemplateInfo.plist
+	rm -rf pkg
 
 $(PGM): $(OBJS)
 	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o $(PGM) $(OBJS)

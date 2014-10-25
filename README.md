@@ -21,22 +21,21 @@ Mac OS X Installation:
 In order to use this infrastructure from Mac OS X, follow these instructions:
    1. Install [Xcode from Apple](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&uo=4).  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple \]\[ programs.  I have only tested with Xcode 6 which is the latest version.  It appears as though project templates are a feature introduced in Xcode 4 so the Apple // project template may work with Xcode 4 or 5 but I have not tested them.
    2. Install the [cc65 v2.13.3 package](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/cc65.2.13.3.pkg).
-   4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/Apple.XCode.Template.pkg).
-   5. Install [Virtual \]\[](http://www.virtualii.com).
+   4. Install the [Apple // project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.1/AppleXcodeTemplate.pkg).
+   5. Install and setup [Virtual \]\[](http://www.virtualii.com).
 
 Your First Project:
 -------------------
 
 Everything you need is now installed.  To create a new Apple \]\[ project in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
-   2. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ Project".  Click "Next".
+   2. In the dialog, you will see an Apple \]\[ option below the OS X section.  Select that and select "Apple \]\[ C Project".  Click "Next".
    3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple \]\[ executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents foler is a reasonable option.  Click "Create".
    5. Your project is now ready for you.  If you select Product->Build, it will build and execute the template code in Virtual \]\[.  On your first build, you may be prompted by Mac OS X to install a Java runtime.  Java is required so if you get this prompt, you should install it.  Once Java is installed, go back to Xcode and select Product->Clean and then Product->Build.  Virtual \]\[ should launch this time.
-   6. The build environmnt includes a template Virtual \]\[ machine configuration, but it is possible that the configuration will not be able to find your ROM file.  If so, select Setup from the toolbar and set the folder with your ROM file.  You can also change any attributes of the machine on which you want to execute your program here.  When you are done, be sure to select File->Save Configuration.  Try your build again from Xcode now that you have your machine configuration set.
-   7. At this point everything should work and you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
-   8. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
-   9. Change main.c and write more code in new C or assembly files until you have the program you always wanted to build...
+   6. At this point everything should work and you should see "HELLO, WORLD!" in the emulator.  Press any key in the emulator to quit the executable and go back to the BASIC prompt.
+   7. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
+   8. Change main.c and write more code in new C or assembly files until you have the program you always wanted to build.  To add new files, select File->New->File.  In the dialog, you will see an Apple \]\[ option in the OS X section.  Select that and in there, you will see options to create a new C file or a new Assembly File.  Select the one you want to add the file to your project.  Put the file in the same directory as main.c.
 
 UNIX Installation:
 ------------------

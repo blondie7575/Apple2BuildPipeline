@@ -87,7 +87,7 @@
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Identifier</key>
-	<string>com.halcyontouch.apple2BuildSystem</string>
+	<string>com.halcyontouch.apple2CBuildSystem</string>
 	<key>Ancestors</key>
 	<array>
 		<string>com.apple.dt.unit.externalBuildSystem</string>
@@ -95,7 +95,7 @@
 	<key>Concrete</key>
 	<true/>
 	<key>Description</key>
-	<string>This template builds Apple ][ programs using cc65.</string>
+	<string>This template creates an Apple ][ C code project.  The project starts with a single C file which you can modify.  You can also add more assembly or C files as you may like.</string>
 	<key>Options</key>
 	<array/>
 	<key>Targets</key>

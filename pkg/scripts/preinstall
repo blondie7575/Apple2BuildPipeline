@@ -1,0 +1,8 @@
+#!/bin/bash
+
+OLDTEMPLATE=~/"Library/Developer/Xcode/Templates/Apple ][/Apple ][ Project.xctemplate"
+
+if [ -d "$OLDTEMPLATE" ]
+then
+    rm -rf "$OLDTEMPLATE"
+fi
