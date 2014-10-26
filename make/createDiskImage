@@ -6,6 +6,27 @@ then
     exit 1
 fi
 
+if [ -z "$JAVA" ]
+then
+    for item in "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home" /Library/Java/JavaVirtualMachines/*/Contents/Home /usr
+    do
+        if [ -x "$item/bin/java" ]
+        then
+            JAVA="$item/bin/java"
+            break
+        fi
+    done
+fi
+
+if [ -z "$JAVA" ]
+then
+    echo Cannot find a path to a Java runtime.
+    echo Go to https://java.com/download if you do not have Java.
+    echo If you do have Java, you may need to uncomment the JAVA
+    echo line in the Makefile and set it to the path for your
+    echo Java runtime binary.
+    exit 1
+fi
 
 APPLECOMMANDER=$1
 MACHINE=$2
@@ -152,7 +173,7 @@ cp "$TEMPLATE" "$DISKIMAGE"
 
 if [ $DELETELOADER -eq 1 ]
 then
-    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
+    "$JAVA" -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
 fi
 
 if [ $RENAMELOADER -eq 1 ]
@@ -164,13 +185,13 @@ then
         rm -f "$DISKIMAGE"
         exit 1
     fi
-    java -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$LOADERFILE" sys
-    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
+    "$JAVA" -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$LOADERFILE" sys
+    "$JAVA" -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
 fi
 
 if [ $DELETEBASIC -eq 1 ]
 then
-    java -jar "$APPLECOMMANDER" -d "$DISKIMAGE" BASIC.SYSTEM
+    "$JAVA" -jar "$APPLECOMMANDER" -d "$DISKIMAGE" BASIC.SYSTEM
 fi
 
 if [ $HASHEADER -eq 1 ]
@@ -178,10 +199,10 @@ then
     HDR_STARTADDR=`od -t x2 -N 2 < "$PROGRAM" | head -1 | awk '{print $2}' | sed 's/^0*//'`
     if [ "$HDR_STARTADDR" = "$STARTADDR" ]
     then
-       dd if="$PROGRAM" bs=4 skip=1 | java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
+       dd if="$PROGRAM" bs=4 skip=1 | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
    else
-       java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR < "$PROGRAM"
+       "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR < "$PROGRAM"
     fi
 else
-    java -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
+    "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
 fi

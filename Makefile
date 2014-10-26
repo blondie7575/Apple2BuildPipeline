@@ -85,6 +85,10 @@ PGM=___PACKAGENAME___
 # this variable:
 #    LDFLAGS += -v
 
+# If you have java installed in a non-standard location, you can set
+# the path to it by uncommenting the following line:
+#    export JAVA=/usr/bin/java
+
 
 # Do not change anything else below here...
 include make/tail.mk
