@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <installer-gui-script minSpecVersion="1">
-    <title>Apple ][ XCode Template</title>
+    <title>Apple II XCode Template</title>
     <pkg-ref id="com.halcyontouch.Apple2Template.pkg"/>
     <options customize="never" require-scripts="false"/>
     <domains enable_currentUserHome="true"/>

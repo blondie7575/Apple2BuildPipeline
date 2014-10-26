@@ -2,7 +2,7 @@
 #  tail.mk
 #  Apple2BuildPipelineSample
 #
-#  Part of a sample build pipeline for Apple ][ software development
+#  Part of a sample build pipeline for Apple II software development
 #
 #  Created by Quinn Dunki on 8/15/14.
 #  One Girl, One Laptop Productions

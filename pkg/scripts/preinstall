@@ -1,8 +1,9 @@
 #!/bin/bash
 
-OLDTEMPLATE=~/"Library/Developer/Xcode/Templates/Apple ][/Apple ][ Project.xctemplate"
-
-if [ -d "$OLDTEMPLATE" ]
-then
-    rm -rf "$OLDTEMPLATE"
-fi
+for item in ~/"Library/Developer/Xcode/Templates/Apple ][" ~/"Library/Developer/Xcode/Templates/File Templates/Apple ]["
+do
+    if [ -d "$item" ]
+    then
+        rm -rf "$item"
+    fi
+done

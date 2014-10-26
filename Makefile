@@ -2,7 +2,7 @@
 #  Makefile
 #  Apple2BuildPipelineSample
 #
-#  Part of a sample build pipeline for Apple ][ software development
+#  Part of a sample build pipeline for Apple II software development
 #
 #  Created by Quinn Dunki on 8/15/14.
 #  One Girl, One Laptop Productions
@@ -34,7 +34,7 @@ PGM=___PACKAGENAME___
 #    MACHINE = apple2enh-loader
 #    MACHINE = apple2enh-reboot
 
-# Uncomment and set this to your starting address in Apple ][ memory
+# Uncomment and set this to your starting address in Apple II memory
 # if necessary:
 #    START_ADDR = 6000
 
