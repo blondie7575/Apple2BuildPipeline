@@ -102,4 +102,6 @@ execute: $(DISKIMAGE)
 %.o:	%.s
 	$(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
 
+$(OBJS): Makefile
+
 -include $(C_DEPS)
