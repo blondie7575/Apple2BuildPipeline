@@ -72,12 +72,12 @@ endif
 all: $(ALLTARGET)
 
 clean:
-	rm -f $(PGM)
+	rm -f "$(PGM)"
 	rm -f $(OBJS)
 	rm -f $(C_DEPS)
 	rm -f $(MAPFILE)
 	rm -f $(ASM_LSTS)
-	rm -f $(DISKIMAGE)
+	rm -f "$(DISKIMAGE)"
 
 createPackage:
 	pkg/createPackage
@@ -86,13 +86,13 @@ cleanMacCruft:
 	rm -rf pkg
 
 $(PGM): $(OBJS)
-	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o $(PGM) $(OBJS)
+	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
 
 $(DISKIMAGE): $(PGM)
-	make/createDiskImage $(AC) $(MACHINE) $(DISKIMAGE) $(PGM) "$(START_ADDR)"
+	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)"
 
 execute: $(DISKIMAGE)
-	osascript make/V2Make.scpt $(CWD) $(PGM) $(CWD)/make/DevApple.vii "$(EXECCMD)"
+	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
 
 %.o:	%.c
 	$(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<
