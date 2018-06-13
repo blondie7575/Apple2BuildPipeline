@@ -2,16 +2,19 @@
 
 TMPDIR=/tmp/pkg.$$
 
+mkdir $TMPDIR
 cp -R pkg/Templates $TMPDIR
+cp -R pkg/Specifications $TMPDIR
+cp -R pkg/Plug-ins $TMPDIR
 
-cp -R make $TMPDIR/'Apple II/Apple II C Project.xctemplate/'
-cp Makefile $TMPDIR/'Apple II/Apple II C Project.xctemplate/'
-cp main.c $TMPDIR/'Apple II/Apple II C Project.xctemplate/'
+cp -R make $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
+cp Makefile $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
+cp main.c $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
 
-cp -R make $TMPDIR/'Apple II/Apple II Asm Project.xctemplate/'
-cp Makefile $TMPDIR/'Apple II/Apple II Asm Project.xctemplate/'
+cp -R make $TMPDIR/Templates/'Apple II/Apple II Asm Project.xctemplate/'
+cp Makefile $TMPDIR/Templates/'Apple II/Apple II Asm Project.xctemplate/'
 
-pkgbuild --root $TMPDIR --version 1.4 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/Templates/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
+pkgbuild --root $TMPDIR --version 2.0 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
 productbuild --distribution pkg/Distribution.xml --resource ./pkg temp.pkg
 rm AppleXcodeTemplate.pkg
 productsign --sign "Developer ID Installer" temp.pkg AppleXcodeTemplate.pkg

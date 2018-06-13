@@ -20,8 +20,7 @@ CC65=$(CC65_BIN)/cc65
 
 AC=make/AppleCommander.jar
 
-C_SRCS=$(wildcard *.c)
-ASM_SRCS=$(wildcard *.s)
+SRCDIRS=.
 
 MACHINE=apple2
 CPU=6502

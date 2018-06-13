@@ -14,10 +14,14 @@ export PATH := $(PATH):$(CC65_BIN)
 
 CWD=$(shell pwd)
 
+C_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.c, $(SRCDIRS))))
 C_OBJS=$(C_SRCS:.c=.o)
 C_DEPS=$(C_SRCS:.c=.u)
+
+ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
 ASM_OBJS=$(ASM_SRCS:.s=.o)
 ASM_LSTS=$(ASM_SRCS:.s=.lst)
+
 OBJS=$(C_OBJS) $(ASM_OBJS)
 
 MAPFILE=$(PGM).map
@@ -78,9 +82,6 @@ clean:
 	rm -f $(MAPFILE)
 	rm -f $(ASM_LSTS)
 	rm -f "$(DISKIMAGE)"
-
-createPackage:
-	pkg/createPackage
 
 cleanMacCruft:
 	rm -rf pkg

@@ -3,7 +3,7 @@
 ;  ___PROJECTNAME___
 ;
 ;  Created by ___FULLUSERNAME___ on ___DATE___.
-;___COPYRIGHT___
+;  ___COPYRIGHT___
 ;
 
 
@@ -11,7 +11,7 @@ COUT = $fded
 KEYBOARD = $c000
 STROBE = $c010
 
-main:
+.proc main
     ldx #$00
 loop:
     lda msg, X
@@ -26,5 +26,6 @@ wait:
     bpl wait
     lda STROBE
     rts
+.endproc
 
 msg:    .asciiz "HELLO, WORLD"

@@ -48,13 +48,9 @@ PGM=___PACKAGENAME___
 # Note: You can assemble for 65816 in 16-bit mode but the C compiler
 # will only produce 8-bit code.
 
-# Any *.c files in your main project directory will automatically be
-# built.  But, if you have subdirectories with C files in them, you 
-# should add them to the list of C_SRCS to build.  Do that by
-# uncommenting the following line and changing "someSubDir" to match
-# the subdirectory you have created.  Add multiple lines like this
-# for each subdirectory:
-#    C_SRCS += $(wildcard someSubDir/*.c)
+# Add any other directories where you are putting C or assembly source
+# files to this list:
+SRCDIRS+=
 
 # Any *.s files in your main project directory will automatically be
 # built.  But, if you have subdirectories with assembly files in them,
