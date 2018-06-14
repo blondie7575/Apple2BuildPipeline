@@ -85,6 +85,32 @@ SRCDIRS+=
 # the path to it by uncommenting the following line:
 #    export JAVA=/usr/bin/java
 
+# If you want to copy one or more files or directories to the target disk
+# image, add the root directory to this variable.  All files will be
+# copied from the source to the target using the same path from the source.
+#
+# For example, if you set COPYDIRS to dir and in your project you have
+# the following files:
+#     dir/mySystemFile
+#     dir/newDir/anotherFile
+#
+# Then, during the copy phase, mySystemFile will be copied into the root
+# of the disk and anotherFile will be copied into a directory named
+# newDir.  Note that the build will _not_ create directories on your
+# destination disk image.  You must make sure that this directory
+# exists in the template disk image in the make directory already.
+COPYDIRS=
+
+# Add any rules you want to execute before any compiles or assembly
+# commands are called here, if any.  You can generate .c, .s or .h
+# files for example.  You can generate data files.  Whatever you
+# might need.
+gen:
+
+# For any files you generated in the gen target above, you should
+# add rules in genclean to remove those generated files when you
+# clean your build.
+genclean:
 
 # Do not change anything else below here...
 include make/tail.mk

@@ -29,10 +29,19 @@ then
 fi
 
 APPLECOMMANDER=$1
-MACHINE=$2
-DISKIMAGE=$3
-PROGRAM=$4
-STARTADDR=`echo $5 | sed 's/^0*//'`
+shift
+
+MACHINE=$1
+shift
+
+DISKIMAGE=$1
+shift
+
+PROGRAM=$1
+shift
+
+STARTADDR=`echo $1 | sed 's/^0*//'`
+shift
 
 if [ ! -f "$PROGRAM" ]
 then
@@ -206,3 +215,9 @@ then
 else
     "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
 fi
+
+for DIR in $*
+do
+    echo Write the code to copy $DIR to the disk image
+    exit 1
+done

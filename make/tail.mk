@@ -32,10 +32,6 @@ LINK_ARGS=
 EXECCMD=
 
 ALLTARGET=$(DISKIMAGE)
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-    ALLTARGET=execute
-endif
 
 ifneq ($(START_ADDR),)
 # If the MACHINE is set to an option which does not support a variable start
@@ -71,9 +67,9 @@ ifeq ($(filter $(MACHINE), apple2 apple2enh),)
     MACHCONFIG += -C $(MACHINE).cfg
 endif
 
-.PHONY: all execute clean
+.PHONY: build execute clean
 	
-all: $(ALLTARGET)
+build: $(ALLTARGET)
 
 clean:
 	rm -f "$(PGM)"
@@ -90,7 +86,7 @@ $(PGM): $(OBJS)
 	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
 
 $(DISKIMAGE): $(PGM)
-	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)"
+	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(COPYDIRS)
 
 execute: $(DISKIMAGE)
 	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"

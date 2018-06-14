@@ -27,3 +27,23 @@ CPU=6502
 CFLAGS=
 ASMFLAGS=
 LDFLAGS=
+
+XCODE_PATH=/Applications/Xcode.app
+XCODE_INFO=$(XCODE_PATH)/Contents/Info.plist
+
+CC65_PLUGIN_PATH=$(HOME)/Library/Developer/Xcode/Plug-ins/cc65.ideplugin
+CC65_PLUGIN_INFO=$(CC65_PLUGIN_PATH)/Contents/Info.plist
+
+XCODE_PLUGIN_COMPATIBILITY=DVTPlugInCompatibilityUUID
+
+
+.PHONY: all gen genclean xcodefix
+
+all:
+	@make xcodefix
+	@make gen
+	@make build
+
+xcodefix:
+	defaults write "$(CC65_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)`
+

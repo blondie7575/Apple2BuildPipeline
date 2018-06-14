@@ -13,7 +13,8 @@
 		<string>make/head.mk</string>
 		<string>make/prodos_template.dsk</string>
 		<string>make/tail.mk</string>
-		<string>make/V2Make.scpt</string>
+                <string>make/V2Make.scpt</string>
+                <string>../___PACKAGENAME___.xcodeproj/xcshareddata/xcschemes/___PACKAGENAME___.xcscheme</string>
 	</array>
 	<key>Definitions</key>
 	<dict>
@@ -82,6 +83,15 @@
 		<dict>
 			<key>Path</key>
 			<string>Makefile</string>
+                </dict>
+		<key>../___PACKAGENAME___.xcodeproj/xcshareddata/xcschemes/___PACKAGENAME___.xcscheme</key>
+		<dict>
+			<key>Group</key>
+				<array>
+					<string>Supporting Files</string>
+				</array>
+			<key>Path</key>
+			<string>___PACKAGENAME___.xcscheme</string>
 		</dict>
 	</dict>
 	<key>Kind</key>
@@ -130,7 +140,45 @@
 				<key>Release</key>
 				<dict/>
 			</dict>
-		</dict>
+                </dict>
+                <dict>
+                        <key>ProductType</key>
+                        <string>com.apple.product-type.tool</string>
+                        <key>TargetIdentifier</key>
+                        <string>com.apple.dt.commandLineToolTarget</string>
+                        <key>Name</key>
+                        <string>doNotBuild</string>
+                        <key>SharedSettings</key>
+                        <dict>
+                                <key>PRODUCT_NAME</key>
+                                <string>doNotBuild</string>
+                                <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                                <string>__fastcall__=""</string>
+                                <key>HEADER_SEARCH_PATHS</key>
+                                <string>/usr/local/lib/cc65/include</string>
+                        </dict>
+                        <key>BuildPhases</key>
+                        <array>
+                                <dict>
+                                        <key>Class</key>
+                                        <string>Sources</string>
+                                </dict>
+                                <dict>
+                                        <key>Class</key>
+                                        <string>Frameworks</string>
+                                </dict>
+                                <dict>
+                                        <key>Class</key>
+                                        <string>CopyFiles</string>
+                                        <key>DstPath</key>
+                                        <string>/usr/share/man/man1/</string>
+                                        <key>DstSubfolderSpec</key>
+                                        <string>0</string>
+                                        <key>RunOnlyForDeploymentPostprocessing</key>
+                                        <string>YES</string>
+                                </dict>
+                        </array>
+                </dict>
 	</array>
 </dict>
 </plist>
