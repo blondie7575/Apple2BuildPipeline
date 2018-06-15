@@ -81,6 +81,118 @@ SRCDIRS+=
 # this variable:
 #    LDFLAGS += -v
 
+# If you want to link the lores graphics driver with your executable,
+# uncomment the next line.
+#    DRIVERS += loresgr
+#
+# To use the lores driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_lores_drv.h"
+#       int main(void)
+#       {
+# 	    tgi_install(&a2_lores_drv);
+# 	    tgi_init();
+# 	    // Use the graphics driver
+# 	    tgi_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/tgi.h file to see what the
+# driver interface provides.  Also check out
+# /usr/local/lib/cc65/include/apple2.h to see the colour definitions.
+
+# If you want to link the hires graphics driver with your executable,
+# uncomment the next line.
+#    DRIVERS += hiresgr
+#
+# To use the hires driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_hires_drv.h"
+#       int main(void)
+#       {
+# 	    tgi_install(&a2_hires_drv);
+# 	    tgi_init();
+# 	    // Use the graphics driver
+# 	    tgi_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/tgi.h file to see what the
+# driver interface provides.  Also check out
+# /usr/local/lib/cc65/include/apple2.h to see the colour definitions.
+
+# If you want to link the extended memory driver with your executable,
+# uncomment the next line.
+#    DRIVERS += auxmem
+#
+# To use the auxmem driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_auxmem_drv.h"
+#       int main(void)
+#       {
+# 	    em_install(&a2_auxmem_drv);
+# 	    // Use the auxmem driver
+# 	    em_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/em.h file to see what the
+# driver interface provides.
+
+# If you want to link the joystick driver with your executable,
+# uncomment the next line.
+#    DRIVERS += joystick
+#
+# To use the joystick driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_joystick_drv.h"
+#       int main(void)
+#       {
+# 	    joy_install(&a2_joystick_drv);
+# 	    // Use the joystick driver
+# 	    joy_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/joystick.h file to see what the
+# driver interface provides.
+
+# If you want to link the mouse driver with your executable,
+# uncomment the next line.
+#    DRIVERS += mouse
+#
+# To use the mouse driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_mouse_drv.h"
+#       int main(void)
+#       {
+# 	    mouse_install(&mouse_def_callbacks, &a2_mouse_drv);
+# 	    // Use the mouse driver
+# 	    mouse_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/mouse.h file to see what the
+# driver interface provides.
+
+# If you want to link the serial driver with your executable,
+# uncomment the next line.
+#    DRIVERS += serial
+#
+# To use the serial driver, add code which looks like this to your
+# project:
+#
+# 	#include "drivers/a2_serial_drv.h"
+#       int main(void)
+#       {
+# 	    ser_install(&a2_serial_drv);
+# 	    // Use the serial driver
+# 	    ser_uninstall();
+# 	}
+#
+# Read the /usr/local/lib/cc65/include/serial.h file to see what the
+# driver interface provides.
+
 # If you have java installed in a non-standard location, you can set
 # the path to it by uncommenting the following line:
 #    export JAVA=/usr/bin/java
