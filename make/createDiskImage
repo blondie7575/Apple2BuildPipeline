@@ -157,7 +157,7 @@ case "$MACHINE" in
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
-        MAXFILENAMELEN=8
+        MAXFILENAMELEN=15
         ;;
 
     *)
@@ -194,7 +194,7 @@ then
         rm -f "$DISKIMAGE"
         exit 1
     fi
-    "$JAVA" -jar "$APPLECOMMANDER" -e "$DISKIMAGE" LOADER.SYSTEM | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$LOADERFILE" sys
+    "$JAVA" -jar "$APPLECOMMANDER" -g "$DISKIMAGE" LOADER.SYSTEM | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$LOADERFILE" sys
     "$JAVA" -jar "$APPLECOMMANDER" -d "$DISKIMAGE" LOADER.SYSTEM
 fi
 
