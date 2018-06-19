@@ -218,6 +218,51 @@ fi
 
 for DIR in $*
 do
-    echo Write the code to copy $DIR to the disk image
-    exit 1
+    if [ ! -d "$DIR" ]
+    then
+        echo Unable to find directory $DIR
+        exit 1
+    fi
+
+    OLDPWD=`pwd`
+    cd $DIR
+
+    find . -type f -print | while read FILE
+    do
+        TRANSFERARG=-p
+        FILETYPE=bin
+        DESTFILE=`echo $FILE | sed 's/^\.\///'`
+
+        if echo $FILE | egrep '\.as$' > /dev/null
+        then
+            # If the file ends with .as, this means the input is AppleSingle format.
+            # Strip the .as from the end of the file name and set the args to do
+            # an AppleSingle transfer.
+            TRANSFERARG=-as
+            FILETYPE=""
+            DESTFILE=`echo $DESTFILE | sed 's/\.as$//'`
+        elif echo $FILE | egrep '\.[ABITSRab]$' > /dev/null
+        then
+            # If the file ends with a single character DOS 3.3 file type, then use
+            # that as the file type.
+            FILETYPE=`echo $DESTFILE | awk -F. '{print $NF}'`
+            DESTFILE=`echo $DESTFILE | sed 's/\.[ABITSRab]$//'`
+        elif echo $FILE | egrep '\.[a-zA-Z][a-zA-Z][a-zA-Z]$' > /dev/null
+        then
+            # If the file ends with a three letter extension, use that as
+            # the file type.
+            FILETYPE=`echo $DESTFILE | awk -F. '{print $NF}'`
+            DESTFILE=`echo $DESTFILE | sed 's/\.[a-zA-Z][a-zA-Z][a-zA-Z]$//'`
+        fi
+
+        # If the file type is text, convert the line feeds to carriage return
+        if [ $FILETYPE = txt ] || [ $FILETYPE = T ]
+        then
+            tr '\n' '\r' < $FILE | "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$OLDPWD/$DISKIMAGE" "$DESTFILE" $FILETYPE
+        else
+            "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$OLDPWD/$DISKIMAGE" "$DESTFILE" $FILETYPE < $FILE
+        fi
+    done
+
+    cd "$OLDPWD"
 done

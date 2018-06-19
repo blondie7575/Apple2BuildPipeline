@@ -208,9 +208,24 @@ SRCDIRS+=
 #
 # Then, during the copy phase, mySystemFile will be copied into the root
 # of the disk and anotherFile will be copied into a directory named
-# newDir.  Note that the build will _not_ create directories on your
-# destination disk image.  You must make sure that this directory
-# exists in the template disk image in the make directory already.
+# newDir.  The newDir directory will be created if it does not already
+# exist.
+#
+# The name of the file to copy is checked and if it ends in:
+#     .as - It assumes the file is in AppleSingle format.  The .as
+#           suffix is stripped from the name when copied to the
+# 	    disk image.
+# .<char> - If the file ends with a single character which matches
+#           a DOS 3.3 file type (A, B, T, etc) it uses that value as
+#           the file type of the file copied to the disk image.  The
+#           single character is removed from the file name.
+#  .<TLA> - If the file ends with a three letter alpha extension, it
+#           uses that TLA as the file type of the file copied to the
+#           disk image.  The TLA is removed from the file name.
+#
+# If you do not provide any type information for your filenames,
+# it will be copied as a binary.
+#
 COPYDIRS=
 
 # Add any rules you want to execute before any compiles or assembly
