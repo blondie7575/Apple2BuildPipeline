@@ -52,14 +52,6 @@ PGM=___PACKAGENAME___
 # files to this list:
 SRCDIRS+=
 
-# Any *.s files in your main project directory will automatically be
-# built.  But, if you have subdirectories with assembly files in them,
-# you should add them to the list of ASM_SRCS to build.  Do that by
-# uncommenting the following line and changing "someSubDir" to match
-# the subdirectory you have created.  Add multiple lines like this
-# for each subdirectory:
-#    ASM_SRCS += $(wildcard someSubDir/*.s)
-
 # If you have a non-standard cc65 install, you may need to change
 # some of these.  Uncomment the following line and change it to the
 # correct path to CC65_HOME if the default is not correct:
