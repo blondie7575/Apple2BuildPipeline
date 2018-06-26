@@ -10,6 +10,7 @@
 		<string>make/createDiskImage</string>
 		<string>make/DevApple.vii</string>
 		<string>make/dos33_template.dsk</string>
+		<string>make/errorFilter.sh</string>
 		<string>make/head.mk</string>
 		<string>make/prodos_template.dsk</string>
 		<string>make/tail.mk</string>
@@ -29,6 +30,13 @@
 			<string>make</string>
 			<key>Path</key>
 			<string>make/V2Make.scpt</string>
+		</dict>
+		<key>make/errorFilter.sh</key>
+		<dict>
+			<key>Group</key>
+			<string>make</string>
+			<key>Path</key>
+			<string>make/errorFilter.sh</string>
 		</dict>
 		<key>make/tail.mk</key>
 		<dict>

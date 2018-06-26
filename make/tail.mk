@@ -95,7 +95,7 @@ cleanMacCruft:
 	rm -rf pkg
 
 $(PGM): $(OBJS)
-	$(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
 
 $(DISKIMAGE): $(PGM)
 	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(COPYDIRS)
@@ -104,12 +104,12 @@ execute: $(DISKIMAGE)
 	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
 
 %.o:	%.c
-	$(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<
 	sed -i .bak 's/\.s:/.o:/' $(@:.o=.u)
 	rm -f $(@:.o=.u).bak
 
 %.o:	%.s
-	$(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
 
 $(OBJS): Makefile
 
