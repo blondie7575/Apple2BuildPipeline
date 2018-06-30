@@ -53,6 +53,7 @@ Common Problems:
 
 There are some known issues which can crop up:
    * If you aren't seeing the "ca65 Assembly" option under Editor->Syntax Coloring, you may be having an Xcode compatibility problem.  These syntax colouring files are provided as part of an Xcode plugin and plugins must advertize their compatibility.  During install, the plugin is set to be compatible with the version of Xcode you have.  If you upgrade Xcode, the plugin will be assumed to be incompatible and will not be loaded.  To workaround this, we force the plugin to be marked as compatible on every build of a Apple II target.  So, you should do a build and then quit and re-launch Xcode.  You should see a warning asking if you want to load the plugin and if you allow the plugin to load, you should see the ca65 syntax colouring option.
+   * If you see permissions problems when you do a build, chances are good that the permissions on the Xcode plugin directory is wrong.  The best way to fix this is to run "sudo chmod -R a+rwx ~/Library/Developer/Xcode/Plug-ins".  You will need to provide a password when you run this command.  I am unsure why some people seem to have bad permissions on this directory and I cannot reproduce the problem, even with a clean install of MacOS.  If you have any information on why this is happening, please let me know.  Thanks.
 
 If these suggestions do not help or you are having some other problem, please contact me and I will try to help you out.
 
