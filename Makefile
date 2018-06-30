@@ -19,8 +19,8 @@ include make/head.mk
 PGM=___PACKAGENAME___
 
 # Set the config you are building for.  See these pages for details:
-#   http://cc65.github.io/cc65/doc/apple2.html#s4
-#   http://cc65.github.io/cc65/doc/apple2enh.html#s4
+#   https://www.cc65.org/doc/apple2-4.html
+#   https://www.cc65.org/doc/apple2enh-4.html
 #
 # Uncomment the one you want below (the first one is the default):
 #    MACHINE = apple2
