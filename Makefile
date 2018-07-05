@@ -31,7 +31,7 @@ clean:
 	rm -f $(PGM).lst
 
 $(PGM):
-	@PATH=$(PATH):/usr/local/bin; $(CL65) -t apple2enh -l$(PGM).lst --start-addr $(ADDR) $(PGM).s
+	@PATH=$(PATH):/usr/local/bin; $(CL65) -t apple2enh --config apple2enh-asm.cfg -l$(PGM).lst --start-addr $(ADDR) $(PGM).s
 	java -jar $(AC) -d $(PGM).dsk $(PGM)
 	java -jar $(AC) -p $(PGM).dsk $(PGM) BIN 0x$(ADDR) < $(PGM)
 	rm -f $(PGM)
