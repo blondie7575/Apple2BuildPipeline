@@ -31,9 +31,17 @@ clean:
 	rm -f $(PGM).lst
 
 $(PGM):
-	@PATH=$(PATH):/usr/local/bin; $(CL65) -t apple2enh -l$(PGM).lst --start-addr $(ADDR) $(PGM).s
+	# First eject the mounted disk in S6D1, which (in some versions of Virtual II) also rewrites
+	# the .dsk image
+	osascript V2Eject.scpt $(PROJECT_DIR) $(PGM)
+	# Rebuild binary
+	@PATH=$(PATH):/usr/local/bin; $(CL65) -t apple2enh --config apple2enh-asm.cfg -l$(PGM).lst --start-addr $(ADDR) $(PGM).s
+	# Update the disk image
 	java -jar $(AC) -d $(PGM).dsk $(PGM)
 	java -jar $(AC) -p $(PGM).dsk $(PGM) BIN 0x$(ADDR) < $(PGM)
+	# Clean up for next time
 	rm -f $(PGM)
 	rm -f $(PGM).o
+	# Insert disk into S6D1, reset the machine and invoke -$(PGM) from prompt
 	osascript V2Make.scpt $(PROJECT_DIR) $(PGM)
+
