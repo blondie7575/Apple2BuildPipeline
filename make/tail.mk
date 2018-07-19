@@ -128,7 +128,7 @@ execute: $(DISKIMAGE)
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
 
 %.tok:	%.bas
-	make/bt $(BASICFLAGS) -o $@ $<
+	make/bt $< $(BASICFLAGS) -o $@
 
 $(OBJS): Makefile
 
