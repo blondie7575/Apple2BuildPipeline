@@ -25,6 +25,11 @@ In June 2018, I have shipped v2.0 of the Xcode project templates.  Among the new
    * You can easily add drivers from the cc65 project by uncommenting a single line in the template Makefile.  Drivers for lores graphics, hires graphics, aux memory, joysticks, mouse and serial devices are supported.
    * The Makefile template provides a gen phase which executes before all compiles.  If you want to generate code or other data files in your project, this is now supported.
    * You can specify one or more directories in your project which contain files you want to copy to the disk image at the end of the build.  So, if you have files beyond the executable itself which need to be on the disk image, you can use this feature to do so.
+   
+In July 2018, I shipped v2.1 with these features:
+
+   * You can now create Applesoft BASIC projects.  Type your BASIC code into Xcode and when you build and run, it will execute under ProDOS or DOS 3.3.
+   * Xcode knows the Applesoft keywords and provide completion and basic syntax highlighting.
 
 Mac OS X Installation:
 ----------------------
@@ -32,7 +37,7 @@ Mac OS X Installation:
 In order to use this infrastructure from Mac OS X, follow these instructions:
    1. Install [Xcode from Apple](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&uo=4).  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple II programs.  I have only tested with Xcode 6 which is the latest version.  It appears as though project templates are a feature introduced in Xcode 4 so the Apple II project template may work with Xcode 4 or 5 but I have not tested them.
    2. Install the [cc65 v2.13.3 package](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/cc65.2.13.3.pkg).
-   3. Install the [Apple II project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/2.0/AppleXcodeTemplate.pkg).
+   3. Install the [Apple II project template](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/2.1/AppleXcodeTemplate.pkg).
    4. Install and setup [Virtual II](http://www.virtualii.com).
 
 Your First Project:
