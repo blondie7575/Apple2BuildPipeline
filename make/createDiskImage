@@ -43,11 +43,7 @@ shift
 STARTADDR=`echo $1 | sed 's/^0*//'`
 shift
 
-if [ ! -f "$PROGRAM" ]
-then
-    echo "Cannot file executable $PROGRAM"
-    exit 1
-fi
+SOURCEFILE=$PROGRAM
 
 case "$MACHINE" in
     apple2)
@@ -55,6 +51,7 @@ case "$MACHINE" in
         DELETELOADER=1
         RENAMELOADER=0
         DELETEBASIC=0
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -66,6 +63,7 @@ case "$MACHINE" in
         DELETELOADER=1
         RENAMELOADER=0
         DELETEBASIC=0
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -77,6 +75,7 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=0
         DELETEBASIC=0
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -88,6 +87,7 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=0
         DELETEBASIC=0
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -99,6 +99,7 @@ case "$MACHINE" in
         DELETELOADER=1
         RENAMELOADER=0
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=0
         FILETYPE="sys"
         TARGETFILE=`basename $PROGRAM`.system
@@ -110,6 +111,7 @@ case "$MACHINE" in
         DELETELOADER=1
         RENAMELOADER=0
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=0
         FILETYPE="sys"
         TARGETFILE=`basename $PROGRAM`.system
@@ -121,6 +123,7 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=1
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -132,6 +135,7 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=1
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -143,6 +147,7 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=1
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
@@ -154,10 +159,35 @@ case "$MACHINE" in
         DELETELOADER=0
         RENAMELOADER=1
         DELETEBASIC=1
+        COPYBINARY=1
         HASHEADER=1
         FILETYPE="bin"
         TARGETFILE=`basename $PROGRAM`
         MAXFILENAMELEN=15
+        ;;
+
+    apple2-basic)
+        TEMPLATE="make/prodos_template.dsk"
+        DELETELOADER=1
+        RENAMELOADER=0
+        DELETEBASIC=0
+        COPYBINARY=0
+        FILETYPE="bas"
+        TARGETFILE=`basename $PROGRAM`
+        SOURCEFILE=${PROGRAM}.tok
+        MAXFILENAMELEN=15
+        ;;
+
+    apple2-dos33-basic)
+        TEMPLATE="make/dos33_template.dsk"
+        DELETELOADER=0
+        RENAMELOADER=0
+        DELETEBASIC=0
+        COPYBINARY=0
+        FILETYPE="A"
+        TARGETFILE=`basename $PROGRAM`
+        SOURCEFILE=${PROGRAM}.tok
+        MAXFILENAMELEN=30
         ;;
 
     *)
@@ -165,6 +195,13 @@ case "$MACHINE" in
         exit 1
         ;;
 esac
+
+if [ ! -f "$SOURCEFILE" ]
+then
+    echo "Cannot file executable $SOURCEFILE"
+    exit 1
+fi
+
 
 if [ ${#TARGETFILE} -gt $MAXFILENAMELEN ]
 then
@@ -203,29 +240,39 @@ then
     "$JAVA" -jar "$APPLECOMMANDER" -d "$DISKIMAGE" BASIC.SYSTEM
 fi
 
-if [ $HASHEADER -eq 1 ]
+if [ $COPYBINARY -eq 1 ]
 then
-    HDR_STARTADDR=`od -t x2 -N 2 < "$PROGRAM" | head -1 | awk '{print $2}' | sed 's/^0*//'`
-    if [ "$HDR_STARTADDR" = "$STARTADDR" ]
+    if [ $HASHEADER -eq 1 ]
     then
-       dd if="$PROGRAM" bs=4 skip=1 | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
-   else
-       "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR < "$PROGRAM"
+        HDR_STARTADDR=`od -t x2 -N 2 < "$SOURCEFILE" | head -1 | awk '{print $2}' | sed 's/^0*//'`
+        if [ "$HDR_STARTADDR" = "$STARTADDR" ]
+        then
+            dd if="$SOURCEFILE" bs=4 skip=1 | "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR
+        else
+            "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE 0x$STARTADDR < "$SOURCEFILE"
+        fi
+    else
+        "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$SOURCEFILE"
     fi
-else
-    "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$TARGETFILE" $FILETYPE < "$PROGRAM"
 fi
 
-for DIR in $*
+for ITEM in $*
 do
-    if [ ! -d "$DIR" ]
+    if [ -f "$ITEM" ] && echo "$ITEM" | grep '\.tok$' > /dev/null
     then
-        echo Unable to find directory $DIR
+        DESTFILE=`echo "$ITEM" | sed 's/\.tok$//'`
+        "$JAVA" -jar "$APPLECOMMANDER" -p "$DISKIMAGE" "$DESTFILE" $FILETYPE 0x801 < "$ITEM"
+        continue
+    fi
+
+    if [ ! -d "$ITEM" ]
+    then
+        echo Unable to find directory $ITEM
         exit 1
     fi
 
     OLDPWD=`pwd`
-    cd $DIR
+    cd $ITEM
 
     find . -type f -print | while read FILE
     do

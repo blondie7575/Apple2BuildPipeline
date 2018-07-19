@@ -33,6 +33,11 @@ PGM=___PACKAGENAME___
 #    MACHINE = apple2enh-system
 #    MACHINE = apple2enh-loader
 #    MACHINE = apple2enh-reboot
+#
+# These are special machine definitions beyond those defined in cc65
+# which are used for BASIC projects:
+#    MACHINE = apple2-basic
+#    MACHINE = apple2-dos33-basic
 
 # Uncomment and set this to your starting address in Apple II memory
 # if necessary:
@@ -72,6 +77,10 @@ SRCDIRS+=
 # If you want to add arguments to the link commandline, add them to
 # this variable:
 #    LDFLAGS += -v
+
+# If you want to add arguments to the BASIC tokenizer commandline,
+# add them to this valiable:
+#    BASICFLAGS += --optimize
 
 # If you want to link the lores graphics driver with your executable,
 # uncomment the next line.

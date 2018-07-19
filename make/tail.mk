@@ -26,7 +26,10 @@ ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
 ASM_OBJS=$(ASM_SRCS:.s=.o)
 ASM_LSTS=$(ASM_SRCS:.s=.lst)
 
-OBJS=$(C_OBJS) $(ASM_OBJS)
+BASIC_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.bas, $(SRCDIRS))))
+BASIC_OBJS=$(BASIC_SRCS:.bas=.tok)
+
+OBJS=$(C_OBJS) $(ASM_OBJS) $(BASIC_OBJS)
 
 MAPFILE=$(PGM).map
 DISKIMAGE=$(PGM).dsk
@@ -40,7 +43,7 @@ ALLTARGET=$(DISKIMAGE)
 ifneq ($(START_ADDR),)
 # If the MACHINE is set to an option which does not support a variable start
 # address, then error.
-    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system apple2-basic apple2-dos33-basic),)
         $(error You cannot change start address with this machine type)
     endif
 else
@@ -54,11 +57,18 @@ else
     ifneq ($(filter $(MACHINE), apple2-loader apple2-reboot apple2enh-loader apple2enh-reboot),)
     	START_ADDR=800
     endif
+    ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
+    	START_ADDR=801
+    endif
 endif
 LDFLAGS += --start-addr 0x$(START_ADDR)
 
 ifneq ($(filter $(MACHINE), apple2 apple2enh apple2-dos33 apple2enh-dos33),)
     EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
+endif
+
+ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
+    EXECCMD=$(shell echo run $(PGM) | tr '[a-z]' '[A-Z]')
 endif
 
 # By default, use the a2 drivers.  If the machine is one of the enhanced
@@ -94,11 +104,17 @@ clean: genclean
 cleanMacCruft:
 	rm -rf pkg
 
+ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
+$(PGM): $(OBJS)
+
+else
 $(PGM): $(OBJS)
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
 
+endif
+
 $(DISKIMAGE): $(PGM)
-	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(COPYDIRS)
+	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(BASIC_OBJS) $(COPYDIRS)
 
 execute: $(DISKIMAGE)
 	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
@@ -110,6 +126,9 @@ execute: $(DISKIMAGE)
 
 %.o:	%.s
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
+
+%.tok:	%.bas
+	make/bt $(BASICFLAGS) -o $@ $<
 
 $(OBJS): Makefile
 

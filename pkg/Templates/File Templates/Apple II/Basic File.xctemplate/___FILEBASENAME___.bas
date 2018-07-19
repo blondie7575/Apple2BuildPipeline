@@ -1,0 +1,5 @@
+10 REM ___FILENAME___
+20 REM ___PROJECTNAME___
+30 REM Created by ___FULLUSERNAME___ on ___DATE___.
+40 REM  ___COPYRIGHT___
+

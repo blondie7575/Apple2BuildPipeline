@@ -4,7 +4,7 @@
 <dict>
 	<key>Nodes</key>
 	<array>
-		<string>main.c</string>
+		<string>___PACKAGENAME___.bas</string>
 		<string>Makefile</string>
 		<string>make/AppleCommander.jar</string>
 		<string>make/bastokenizer-tools-bt-0.2.0.jar</string>
@@ -21,10 +21,10 @@
 	</array>
 	<key>Definitions</key>
 	<dict>
-		<key>main.c</key>
+		<key>___PACKAGENAME___.bas</key>
 		<dict>
 			<key>Path</key>
-			<string>main.c</string>
+			<string>___PACKAGENAME___.bas</string>
 		</dict>
 		<key>make/V2Make.scpt</key>
 		<dict>
@@ -121,7 +121,7 @@
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Identifier</key>
-	<string>com.halcyontouch.apple2CBuildSystem</string>
+	<string>com.halcyontouch.apple2BasicBuildSystem</string>
 	<key>Ancestors</key>
 	<array>
 		<string>com.apple.dt.unit.externalBuildSystem</string>
@@ -129,7 +129,7 @@
 	<key>Concrete</key>
 	<true/>
 	<key>Description</key>
-	<string>This template creates an Apple II C code project.  The project starts with a single C file which you can modify.  You can also add more assembly or C files as you may like.</string>
+	<string>This template creates an Apple II Basic code project.  The project starts with a single Applesoft file which you can modify.</string>
 	<key>Options</key>
 	<array/>
 	<key>Targets</key>

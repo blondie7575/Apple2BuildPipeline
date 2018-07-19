@@ -77,6 +77,77 @@
 				<key>version</key>
 				<string>1.0</string>
 			</dict>
+			<key>Xcode.FileDataType.Basic.Applesoft</key>
+			<dict>
+				<key>id</key>
+				<string>Xcode.FileDataType.Basic.Applesoft</string>
+				<key>localizedDescription</key>
+				<string>Applesoft BASIC Source</string>
+				<key>name</key>
+				<string>File type for Applesoft BASIC</string>
+				<key>point</key>
+				<string>Xcode.FileDataType</string>
+				<key>typeConformedTo</key>
+				<array>
+					<dict>
+						<key>typeIdentifier</key>
+						<string>public.source-code</string>
+					</dict>
+				</array>
+				<key>typeIdentifier</key>
+				<string>com.rand-family.xcode.applesoft</string>
+				<key>version</key>
+				<string>1.0</string>
+			</dict>
+			<key>Xcode.FileDataTypeDetector.Basic.Applesoft</key>
+			<dict>
+				<key>detectedTypeIdentifier</key>
+				<string>com.rand-family.xcode.applesoft</string>
+				<key>id</key>
+				<string>Xcode.FileDataTypeDetector.Basic.Applesoft</string>
+				<key>matchesExtension</key>
+				<string>bas</string>
+				<key>point</key>
+				<string>Xcode.FileDataTypeDetector</string>
+			</dict>
+			<key>Xcode.SourceCodeLanguage.Applesoft</key>
+			<dict>
+				<key>commentSyntax</key>
+				<array>
+					<dict>
+						<key>prefix</key>
+						<string>REM</string>
+					</dict>
+				</array>
+				<key>conformsTo</key>
+				<array>
+					<dict>
+						<key>identifier</key>
+						<string>Xcode.SourceCodeLanguage.Generic</string>
+					</dict>
+				</array>
+				<key>fileDataType</key>
+				<array>
+					<dict>
+						<key>identifier</key>
+						<string>com.rand-family.xcode.applesoft</string>
+					</dict>
+				</array>
+				<key>id</key>
+				<string>Xcode.SourceCodeLanguage.Applesoft</string>
+				<key>languageName</key>
+				<string>Applesoft BASIC</string>
+				<key>languageSpecification</key>
+				<string>xcode.lang.basic.applesoft</string>
+				<key>name</key>
+				<string>Applesoft BASIC</string>
+				<key>point</key>
+                                <string>Xcode.SourceCodeLanguage</string>
+                                <key>supportsIndentation</key>
+                                <string>false</string>
+				<key>version</key>
+				<string>1.0</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>
