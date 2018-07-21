@@ -7,17 +7,18 @@ cp -R pkg/Templates $TMPDIR
 cp -R pkg/Specifications $TMPDIR
 cp -R pkg/Plug-ins $TMPDIR
 
-cp -R make $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
-cp Makefile $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
-cp main.c $TMPDIR/Templates/'Apple II/Apple II C Project.xctemplate/'
+cp -R make $TMPDIR/Templates/'Apple II/Apple II cc65 Project.xctemplate/'
+cp Makefile $TMPDIR/Templates/'Apple II/Apple II cc65 Project.xctemplate/'
+cp main.c $TMPDIR/Templates/'Apple II/Apple II cc65 Project.xctemplate/'
 
-cp -R make $TMPDIR/Templates/'Apple II/Apple II Asm Project.xctemplate/'
-cp Makefile $TMPDIR/Templates/'Apple II/Apple II Asm Project.xctemplate/'
+cp -R make $TMPDIR/Templates/'Apple II/Apple II ca65 Project.xctemplate/'
+cp Makefile $TMPDIR/Templates/'Apple II/Apple II ca65 Project.xctemplate/'
 
 cp -R make $TMPDIR/Templates/'Apple II/Apple II Basic Project.xctemplate/'
-sed 's/^#    MACHINE = apple2-basic/MACHINE = apple2-basic/' < Makefile > $TMPDIR/Templates/'Apple II/Apple II Basic Project.xctemplate'/Makefile
 
-pkgbuild --root $TMPDIR --version 2.0 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
+cp -R make $TMPDIR/Templates/'Apple II/Apple II Merlin Project.xctemplate/'
+
+pkgbuild --root $TMPDIR --version 2.2 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
 productbuild --distribution pkg/Distribution.xml --resource ./pkg temp.pkg
 rm AppleXcodeTemplate.pkg
 productsign --sign "Developer ID Installer" temp.pkg AppleXcodeTemplate.pkg

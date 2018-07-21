@@ -1,9 +1,6 @@
 #!/bin/bash
 
-for item in ~/"Library/Developer/Xcode/Templates/Apple ][" ~/"Library/Developer/Xcode/Templates/File Templates/Apple ]["
-do
-    if [ -d "$item" ]
-    then
-        rm -rf "$item"
-    fi
-done
+rm -rf "$2/Templates/Apple II"
+rm -rf "$2/Templates/File Templates/Apple II"
+rm -rf "$2/Plug-ins/cc65.ideplugin"
+

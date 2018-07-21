@@ -1,0 +1,283 @@
+// Merlin Assembler language specs
+(
+
+/****************************************************************************/
+// MARK: Keywords
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.asm.merlin.identifier";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = ":;<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_{|}~";
+            Chars = "0123456789:;<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_{|}~";
+            Type = "xcode.syntax.identifier";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.merlin.keyword";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = ":;<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_{|}~";
+            Chars = "0123456789:;<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_{|}~";
+            Words = (
+                "]xcodestart",
+                "]xcodeend",
+
+                "adc",
+                "adcl",
+                "and",
+                "andl",
+                "asl",
+                "bcc",
+                "blt",
+                "bcs",
+                "bge",
+                "beq",
+                "bge",
+                "bit",
+                "blt",
+                "bmi",
+                "bne",
+                "bpl",
+                "bra",
+                "brk",
+                "brl",
+                "bvc",
+                "bvs",
+                "clc",
+                "cld",
+                "cli",
+                "clv",
+                "cmp",
+                "cmpl",
+                "cop",
+                "cpa",
+                "cpx",
+                "cpy",
+                "dec",
+                "dex",
+                "dey",
+                "eor",
+                "eorl",
+                "inc",
+                "inx",
+                "iny",
+                "jmp",
+                "jmpl",
+                "jsl",
+                "jsr",
+                "lda",
+                "ldal",
+                "ldx",
+                "ldy",
+                "lsr",
+                "mvn",
+                "mvp",
+                "nop",
+                "ora",
+                "oral",
+                "pea",
+                "pei",
+                "per",
+                "pha",
+                "phb",
+                "phd",
+                "phk",
+                "php",
+                "phx",
+                "phy",
+                "pla",
+                "plb",
+                "pld",
+                "plp",
+                "plx",
+                "ply",
+                "rep",
+                "rol",
+                "ror",
+                "rti",
+                "rtl",
+                "rts",
+                "sbc",
+                "sbcl",
+                "sec",
+                "sed",
+                "sei",
+                "sep",
+                "sta",
+                "stal",
+                "stp",
+                "stx",
+                "sty",
+                "stz",
+                "tax",
+                "tay",
+                "tcd",
+                "tad",
+                "tas",
+                "tcs",
+                "tdc",
+                "tda",
+                "trb",
+                "tsb",
+                "tsc",
+                "tsa",
+                "tsx",
+                "txa",
+                "txs",
+                "txy",
+                "tya",
+                "tyx",
+                "wai",
+                "wdm",
+                "xba",
+                "swa",
+                "xce",
+
+                "equ",
+                "ext",
+                "ent",
+                "org",
+                "dsk",
+                "sav",
+                "ds",
+                "rel",
+                "lnk",
+                "link",
+                "asm",
+                "sna",
+                "obj",
+                "put",
+                "putbin",
+                "use",
+                "var",
+                "knd",
+                "ali",
+                "typ",
+                "end",
+                "dum",
+                "dend",
+                "dat",
+
+                "asc",
+                "dci",
+                "inv",
+                "fls",
+                "rev",
+                "str",
+                "strl",
+
+                "da",
+                "dw",
+                "ddb",
+                "dfb",
+                "db",
+                "adr",
+                "adrl",
+                "hex",
+                "ds",
+
+                "do",
+                "else",
+                "if",
+                "fin",
+
+                "chk",
+                "err",
+                "lup",
+                "mx",
+                "usr",
+                "xc",
+
+                "mac",
+                "eom",
+                "<<<",
+                "pmc",
+                ">>>",
+
+            );
+            Type = "xcode.syntax.keyword";
+            AltType = "xcode.syntax.identifier";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Simple Syntax Coloring
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.asm.merlin";
+        Description = "Merlin Assembler Coloring";
+        BasedOn = "xcode.lang.simpleColoring";
+        IncludeInMenu = YES;
+        Name = "Assembly (Merlin)";
+        Syntax = {
+            Tokenizer = "xcode.lang.asm.merlin.lexer";
+            IncludeRules = (
+                "xcode.lang.asm.merlin.codeblock",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+    {
+        Identifier = "xcode.lang.asm.merlin.lexer";
+        Syntax = {
+            IncludeRules = (
+                "xcode.lang.asm.merlin.comment.semi",
+                "xcode.lang.asm.merlin.comment.star",
+                "xcode.lang.asm.merlin.number",
+                "xcode.lang.asm.merlin.keyword",
+                "xcode.lang.asm.merlin.identifier",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.asm.merlin.comment.semi";
+        Syntax = {
+            StartAtBOL = NO;
+            StartAtColumnZero = NO;
+            Start = ";";
+            End = "\n";
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.merlin.comment.star";
+        Syntax = {
+            StartAtBOL = YES;
+            StartAtColumnZero = YES;
+            Start = "*";
+            End = "\n";
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.merlin.number";
+        Syntax = {
+            StartChars = "#$%0123456789";
+            Match = "[#$%0-9][<>^$]?[0-9A-Fa-f]*";
+            Type = "xcode.syntax.number";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.merlin.codeblock";
+        Syntax = {
+            Tokenizer = "xcode.lang.asm.merlin.lexer";
+            Start = "]xcodestart";
+            End = "]xcodeend";
+            Recursive = NO;
+            Foldable = YES;
+            Type = "xcode.syntax.definition.function";
+            IncludeRules = (
+            );
+        };
+    },
+)

@@ -12,12 +12,16 @@
 
 export CC65_HOME := /usr/local/lib/cc65
 
-CC65_BIN = /usr/local/bin
+CC65_BIN=/usr/local/bin
 
 CL65=$(CC65_BIN)/cl65
 CA65=$(CC65_BIN)/ca65
 CC65=$(CC65_BIN)/cc65
 CO65=$(CC65_BIN)/co65
+
+MERLIN_DIR=/usr/local
+MERLIN_BIN=$(MERLIN_DIR)/bin/Merlin32
+MERLIN_LIB=$(MERLIN_DIR)/lib/Merlin
 
 AC=make/AppleCommander.jar
 

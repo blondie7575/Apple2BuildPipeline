@@ -6,12 +6,15 @@
 ;  ___COPYRIGHT___
 ;
 
+.include "apple2.inc"
 
 COUT = $fded
-KEYBOARD = $c000
-STROBE = $c010
+CR = $8d
 
 .proc main
+    lda #CR
+    jsr COUT
+
     ldx #$00
 loop:
     lda msg, X
@@ -22,10 +25,15 @@ loop:
     jmp loop
     
 wait:
-    lda KEYBOARD
+    lda KBD
     bpl wait
-    lda STROBE
-    rts
+    lda KBDSTRB
+
+    lda #CR
+    jsr COUT
+
+    jmp DOSWARM
 .endproc
 
 msg:    .asciiz "HELLO, WORLD"
+

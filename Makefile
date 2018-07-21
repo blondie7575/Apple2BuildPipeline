@@ -33,11 +33,6 @@ PGM=___PACKAGENAME___
 #    MACHINE = apple2enh-system
 #    MACHINE = apple2enh-loader
 #    MACHINE = apple2enh-reboot
-#
-# These are special machine definitions beyond those defined in cc65
-# which are used for BASIC projects:
-#    MACHINE = apple2-basic
-#    MACHINE = apple2-dos33-basic
 
 # Uncomment and set this to your starting address in Apple II memory
 # if necessary:

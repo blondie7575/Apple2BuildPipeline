@@ -10,114 +10,164 @@
 #  http://www.quinndunki.com/blondihacks
 #
 
-export PATH := $(PATH):$(CC65_BIN)
+BUILD_TYPE := $(shell if echo $(MACHINE) | grep -q -- -basic; then echo basic; elif echo $(MACHINE) | grep -q -- -merlin; then echo merlin; else echo cc65; fi)
 
 CWD=$(shell pwd)
 
-ifneq ($(DRIVERS),)
-    SRCDIRS+=$(DRVDIR)
-endif
+DISKIMAGE=$(PGM).dsk
 
-C_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.c, $(SRCDIRS))))
-C_OBJS=$(C_SRCS:.c=.o)
-C_DEPS=$(C_SRCS:.c=.u)
-
-ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
-ASM_OBJS=$(ASM_SRCS:.s=.o)
-ASM_LSTS=$(ASM_SRCS:.s=.lst)
+EXECCMD=
 
 BASIC_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.bas, $(SRCDIRS))))
 BASIC_OBJS=$(BASIC_SRCS:.bas=.tok)
 
-OBJS=$(C_OBJS) $(ASM_OBJS) $(BASIC_OBJS)
+ifeq ($(BUILD_TYPE),cc65)
+    export PATH := $(PATH):$(CC65_BIN)
 
-MAPFILE=$(PGM).map
-DISKIMAGE=$(PGM).dsk
+    ifneq ($(DRIVERS),)
+        SRCDIRS+=$(DRVDIR)
+    endif
 
-LINK_ARGS=
+    C_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.c, $(SRCDIRS))))
+    C_OBJS=$(C_SRCS:.c=.o)
+    C_DEPS=$(C_SRCS:.c=.u)
 
-EXECCMD=
+    ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
+    ASM_OBJS=$(ASM_SRCS:.s=.o)
+    ASM_LSTS=$(ASM_SRCS:.s=.lst)
 
-ALLTARGET=$(DISKIMAGE)
+    MAPFILE=$(PGM).map
 
-ifneq ($(START_ADDR),)
-# If the MACHINE is set to an option which does not support a variable start
-# address, then error.
-    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system apple2-basic apple2-dos33-basic),)
-        $(error You cannot change start address with this machine type)
+    ifneq ($(START_ADDR),)
+        # If the MACHINE is set to an option which does not support a variable
+        # start address, then error.
+        ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+            $(error You cannot change start address with this machine type)
+        endif
+    else
+        # If not set, then use the default for the config as per cc65
+	# documentation
+        ifneq ($(filter $(MACHINE), apple2 apple2-dos33 apple2enh apple2enh-dos33),)
+            START_ADDR=803
+        endif
+        ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+            START_ADDR=2000
+        endif
+        ifneq ($(filter $(MACHINE), apple2-loader apple2-reboot apple2enh-loader apple2enh-reboot),)
+            START_ADDR=800
+        endif
+    endif
+
+    LDFLAGS += --start-addr 0x$(START_ADDR)
+
+    ifneq ($(filter $(MACHINE), apple2 apple2enh apple2-dos33 apple2enh-dos33),)
+        EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
+    endif
+
+    # By default, use the a2 drivers.  If the machine is one of the enhanced
+    # targets though, use the a2e drivers.
+    DRV_BASE_MACHINE=a2
+    ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
+        DRV_BASE_MACHINE=a2e
+    endif
+
+    MACHCONFIG= -t apple2
+
+    ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
+        MACHCONFIG= -t apple2enh
+    endif
+
+    ifeq ($(filter $(MACHINE), apple2 apple2enh),)
+        MACHCONFIG += -C $(MACHINE).cfg
     endif
 else
-    # If not set, then use the default for the config as per cc65 documentation
-    ifneq ($(filter $(MACHINE), apple2 apple2-dos33 apple2enh apple2enh-dos33),)
-    	START_ADDR=803
-    endif
-    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
-    	START_ADDR=2000
-    endif
-    ifneq ($(filter $(MACHINE), apple2-loader apple2-reboot apple2enh-loader apple2enh-reboot),)
-    	START_ADDR=800
-    endif
-    ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
-    	START_ADDR=801
-    endif
-endif
-LDFLAGS += --start-addr 0x$(START_ADDR)
+    C_OBJS=
+    C_DEPS=
 
-ifneq ($(filter $(MACHINE), apple2 apple2enh apple2-dos33 apple2enh-dos33),)
+    ASM_OBJS=
+    ASM_LSTS=
+endif
+
+ifeq ($(BUILD_TYPE),merlin)
+    ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
+    MAPFILE=_Output.txt
     EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
 endif
 
-ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
+ifeq ($(BUILD_TYPE),basic)
+    MAPFILE=
     EXECCMD=$(shell echo run $(PGM) | tr '[a-z]' '[A-Z]')
 endif
 
-# By default, use the a2 drivers.  If the machine is one of the enhanced
-# targets though, use the a2e drivers.
-DRV_BASE_MACHINE=a2
-ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
-    DRV_BASE_MACHINE=a2e
-endif
+OBJS=$(C_OBJS) $(ASM_OBJS) $(BASIC_OBJS)
 
-MACHCONFIG= -t apple2
+ALLTARGET=$(DISKIMAGE)
 
-ifneq ($(filter $(MACHINE), apple2enh apple2apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
-    MACHCONFIG= -t apple2enh
-endif
 
-ifeq ($(filter $(MACHINE), apple2 apple2enh),)
-    MACHCONFIG += -C $(MACHINE).cfg
-endif
+.PHONY: build execute clean cleandrivers xcodefix
 
-.PHONY: build execute clean xcodefix loresgr hiresgr auxmem joystick mouse serial
-	
 build: $(ALLTARGET)
-
-clean: genclean
-	rm -f "$(PGM)"
-	rm -f $(OBJS)
-	rm -f $(C_DEPS)
-	rm -f $(MAPFILE)
-	rm -f $(ASM_LSTS)
-	rm -f "$(DISKIMAGE)"
-	rm -Rf "$(DRVDIR)"
-
-cleanMacCruft:
-	rm -rf pkg
-
-ifneq ($(filter $(MACHINE), apple2-basic apple2-dos33-basic),)
-$(PGM): $(OBJS)
-
-else
-$(PGM): $(OBJS)
-	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
-
-endif
 
 $(DISKIMAGE): $(PGM)
 	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(BASIC_OBJS) $(COPYDIRS)
 
 execute: $(DISKIMAGE)
 	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
+
+%.tok:	%.bas
+	make/bt $< $(BASICFLAGS) -o $@
+
+ifneq ($(DRIVERS),)
+cleandrivers:
+	rm -Rf "$(DRVDIR)"
+
+else
+cleandrivers:
+
+endif
+
+clean: genclean cleandrivers
+	rm -f "$(PGM)" $(OBJS) $(C_DEPS) $(MAPFILE) $(ASM_LSTS) "$(DISKIMAGE)"
+
+cleanMacCruft:
+	rm -rf pkg
+
+# Some gen phase stuff...
+gen: xcodefix $(DRIVERS)
+
+xcodefix:
+	defaults write "$(CC65_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)`
+
+
+ifeq ($(BUILD_TYPE),basic)
+# Build rules for BASIC projects
+
+$(PGM): $(OBJS)
+	cp $(PGM).tok $(PGM)
+
+$(OBJS): Makefile
+
+
+endif
+
+
+ifeq ($(BUILD_TYPE),merlin)
+# Build rules for Merlin projects
+
+$(PGM): $(ASM_SRCS) Makefile
+	$(MERLIN_BIN) -V $(MERLIN_LIB) linkscript.s
+	rm -f _FileInformation.txt
+
+endif
+
+
+ifeq ($(BUILD_TYPE),cc65)
+# Build rules for cc65 projects
+
+$(PGM): $(OBJS)
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
+
+$(OBJS): Makefile
 
 %.o:	%.c
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<
@@ -127,19 +177,8 @@ execute: $(DISKIMAGE)
 %.o:	%.s
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
 
-%.tok:	%.bas
-	make/bt $< $(BASICFLAGS) -o $@
 
-$(OBJS): Makefile
-
-
-# Some gen phase stuff...
-gen: xcodefix $(DRIVERS)
-
-xcodefix:
-	defaults write "$(CC65_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)`
-
-
+.PHONY: loresgr hiresgr auxmem joystick mouse serial
 # Lores driver codegen
 loresgr: $(DRVDIR)/a2_lores_drv.s $(DRVDIR)/a2_lores_drv.h
 
@@ -216,6 +255,8 @@ $(DRVDIR)/a2_serial_drv.h:
 	mkdir -p $(DRVDIR)
 	echo '#include <serial.h>' > $@
 	echo 'extern char a2_serial_drv;' >> $@
+
+endif
 
 
 -include $(C_DEPS)
