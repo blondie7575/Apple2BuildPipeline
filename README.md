@@ -29,7 +29,7 @@ Mac OS X Installation:
 ----------------------
 
 In order to use this infrastructure from Mac OS X, follow these instructions:
-   1. Install [Xcode from Apple](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&uo=4).  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple II programs.  I have only tested with Xcode 6 which is the latest version.  It appears as though project templates are a feature introduced in Xcode 4 so the Apple II project template may work with Xcode 4 or 5 but I have not tested them.
+   1. Install [Xcode from Apple](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&uo=4).  Xcode is generally the most popular app in the Mac App Store in the "Developer Tools" category.  Xcode is free and you do not need to be a registered Apple developer to download and use it, especially if you are building Apple II programs.  I am generally running the latest version of Xcode so if you are trying to use these templates with an old version, you may run into problems.
    2. Install the [Apple II project templates](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/2.5/AppleXcodeTemplate.pkg).
    3. Install and setup [Virtual II](http://www.virtualii.com).
    4. If you plan to use cc65 based projects, install the [cc65 v2.13.3 package](https://github.com/jeremysrand/Apple2BuildPipeline/releases/download/1.0/cc65.2.13.3.pkg).  I haven't tested without cc65 installed but in theory, if you only plan to use Applesoft or Merlin32 based projects, you don't need to install cc65.
