@@ -43,7 +43,7 @@ Your First cc65 Based Project:
 
 To create a new cc65 based project for the Apple II in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
-   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select that and select "Apple II cc65 Project" for a C based project.  Or select "Apple II ca65 Project" for an assembly project.  Click "Next".
+   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select "Apple II cc65 Project" for a C based project.  Or select "Apple II ca65 Project" for an assembly project.  Click "Next".
    3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple II executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents folder is a reasonable option.  Click "Create".
    5. Your project is now ready for you.  If you select Product->Build, it will build your code.  If you select Product->Run, it will build and execute the template code in Virtual II.  On your first build, you may be prompted by Mac OS X to install a Java runtime.  Java is required so if you get this prompt, you should install it.  Once Java is installed, go back to Xcode and select Product->Clean and then Product->Run.  Virtual II should launch this time.
@@ -57,14 +57,14 @@ To create a new cc65 based project for the Apple II in Xcode:
 Your First Applesoft BASIC Project:
 -----------------------------------
 
-To create a new Applesoft BASIC project for the Apple II project in Xcode:
+To create a new Applesoft BASIC project for the Apple II in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
-   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select that and select "Apple II Basic Project" for an Applesoft project.  Click "Next".
+   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select "Apple II Basic Project" for an Applesoft project.  Click "Next".
    3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple II program you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents folder is a reasonable option.  Click "Create".
    5. Your project is now ready for you.  If you select Product->Build, it will tokenize your BASIC code.  If you select Product->Run, it will tokenize and execute the template code in Virtual II.  On your first build, you may be prompted by Mac OS X to install a Java runtime.  Java is required so if you get this prompt, you should install it.  Once Java is installed, go back to Xcode and select Product->Clean and then Product->Run.  Virtual II should launch this time.
    6. At this point everything should work and you should see "HELLO, WORLD!" in the emulator.
-   7. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.
+   7. Review the Makefile and set any options you want.  The file has lots of comments to help you understand the configuration options.  Definitely check out the optimization option for BASIC programs.
    8. Change the file containting the Applesoft code until you have the program you always wanted to build.
    9. You can add other C and assembly files to your projects but they will be ignored.  Today, there is no way to add a binary built by cc65 or Merlin32 and include that in a BASIC project (let me know if you wan this).  You can add BASIC files to your cc65 and Merlin32 based projects though.
    10. You can add a second, third, etc "Basic File" to your project.  Any Applesoft files added to the project will be tokenized during the build and will be copied to the disk image.  But when you build and run, only the original BASIC file will be executed.
@@ -75,7 +75,7 @@ Your First Merlin32 Based Project:
 
 To create a new Merlin32 based project for the Apple II in Xcode:
    1. Start Xcode and create a new project by using File->New->Project...
-   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select that and select "Apple II Merlin Project".  Click "Next".
+   2. In the dialog, you will see an "Apple II" option below the Cross-platform section.  Select "Apple II Merlin Project".  Click "Next".
    3. A dialog box with a few text fields will appear.  In product name, put in the name of the Apple II executable you want to build.  Organization Name and Organization Identifier can be anything you want it to be.  Leave Build Tool set to "/usr/bin/make".  Click "Next".
    4. Xcode now prompts you where you want to save your project.  The name of the project will be the product name you already gave.  Pick a good directory for your project.  Your Documents folder is a reasonable option.  Click "Create".
    5. Your project is now ready for you.  If you select Product->Build, it will build your code.  If you select Product->Run, it will build and execute the template code in Virtual II.  On your first build, you may be prompted by Mac OS X to install a Java runtime.  Java is required so if you get this prompt, you should install it.  Once Java is installed, go back to Xcode and select Product->Clean and then Product->Run.  Virtual II should launch this time.
