@@ -136,7 +136,7 @@ cleanMacCruft:
 gen: xcodefix $(DRIVERS)
 
 xcodefix:
-	defaults write "$(CC65_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)`
+	defaults write "$(CC65_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)` || true
 
 
 ifeq ($(BUILD_TYPE),basic)
