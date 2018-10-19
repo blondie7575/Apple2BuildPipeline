@@ -18,10 +18,6 @@ include make/head.mk
 # The name of your system or binary file to build goes here:
 PGM=___PACKAGENAME___
 
-# Set the config you are building for.  See these pages for details:
-#   https://www.cc65.org/doc/apple2-4.html
-#   https://www.cc65.org/doc/apple2enh-4.html
-#
 # Uncomment the one you want below (the first one is the default):
 #    MACHINE = apple2
 #    MACHINE = apple2-dos33
@@ -33,6 +29,13 @@ PGM=___PACKAGENAME___
 #    MACHINE = apple2enh-system
 #    MACHINE = apple2enh-loader
 #    MACHINE = apple2enh-reboot
+
+# Uncomment the appropriate project type.  If your entry point is
+# main() in a .c file, then your project type is cc65.  If your
+# entry point is in an assembly file, then you project type is
+# ca65:
+#    PROJECT_TYPE = cc65
+#    PROJECT_TYPE = ca65
 
 # Uncomment and set this to your starting address in Apple II memory
 # if necessary:
@@ -54,8 +57,12 @@ SRCDIRS+=
 
 # If you have a non-standard cc65 install, you may need to change
 # some of these.  Uncomment the following line and change it to the
-# correct path to CC65_HOME if the default is not correct:
-#    export CC65_HOME := /usr/local/lib/cc65
+# correct path to CC65_HOME if the default is not correct.  If you
+# are using cc65 v2.13.3, the default is:
+# 	/usr/local/lib/cc65
+# If you are using cc65 v2.17, the default is:
+# 	/usr/local/share/cc65
+#    export CC65_HOME := /path/to/your/cc65/directory
 # 
 # If the path to the cc65 binaries is not correct, uncomment this
 # line and change it:
@@ -93,9 +100,9 @@ SRCDIRS+=
 # 	    tgi_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/tgi.h file to see what the
+# Read the $CC65_HOME/include/tgi.h file to see what the
 # driver interface provides.  Also check out
-# /usr/local/lib/cc65/include/apple2.h to see the colour definitions.
+# $CC65_HOME/include/apple2.h to see the colour definitions.
 
 # If you want to link the hires graphics driver with your executable,
 # uncomment the next line.
@@ -113,9 +120,9 @@ SRCDIRS+=
 # 	    tgi_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/tgi.h file to see what the
+# Read the $CC65_HOME/cc65/include/tgi.h file to see what the
 # driver interface provides.  Also check out
-# /usr/local/lib/cc65/include/apple2.h to see the colour definitions.
+# $CC65_HOME/include/apple2.h to see the colour definitions.
 
 # If you want to link the extended memory driver with your executable,
 # uncomment the next line.
@@ -132,7 +139,7 @@ SRCDIRS+=
 # 	    em_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/em.h file to see what the
+# Read the $CC65_HOME/include/em.h file to see what the
 # driver interface provides.
 
 # If you want to link the joystick driver with your executable,
@@ -150,7 +157,7 @@ SRCDIRS+=
 # 	    joy_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/joystick.h file to see what the
+# Read the $CC65_HOME/include/joystick.h file to see what the
 # driver interface provides.
 
 # If you want to link the mouse driver with your executable,
@@ -168,7 +175,7 @@ SRCDIRS+=
 # 	    mouse_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/mouse.h file to see what the
+# Read the $CC65_HOME/include/mouse.h file to see what the
 # driver interface provides.
 
 # If you want to link the serial driver with your executable,
@@ -186,7 +193,7 @@ SRCDIRS+=
 # 	    ser_uninstall();
 # 	}
 #
-# Read the /usr/local/lib/cc65/include/serial.h file to see what the
+# Read the $CC65_HOME/include/serial.h file to see what the
 # driver interface provides.
 
 # If you have java installed in a non-standard location, you can set

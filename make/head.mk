@@ -10,9 +10,13 @@
 #  http://www.quinndunki.com/blondihacks
 #
 
-export CC65_HOME := /usr/local/lib/cc65
-
 CC65_BIN=/usr/local/bin
+
+ifneq ($(wildcard /usr/local/lib/cc65),)
+    export CC65_HOME := /usr/local/lib/cc65
+else
+    export CC65_HOME := /usr/local/share/cc65
+endif
 
 CL65=$(CC65_BIN)/cl65
 CA65=$(CC65_BIN)/ca65

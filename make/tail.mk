@@ -24,6 +24,46 @@ BASIC_OBJS=$(BASIC_SRCS:.bas=.tok)
 ifeq ($(BUILD_TYPE),cc65)
     export PATH := $(PATH):$(CC65_BIN)
 
+    # By default, use the a2 drivers.  If the machine is one of the enhanced
+    # targets though, use the a2e drivers.
+    DRV_BASE_MACHINE=a2
+    BASE_MACHINE = apple2
+    ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
+        DRV_BASE_MACHINE=a2e
+        BASE_MACHINE = apple2enh
+    endif
+
+    CC65_VERSION := $(shell $(CC65) --version 2>&1 | grep '^cc65 V')
+
+    ifeq ($(CC65_VERSION),cc65 V2.13.3)
+        export CC65_SUPPORTS_APPLE_SINGLE=0
+        CC65_CREATE_DEP_ARG=--create-dep
+        CC65_LIST_ARG=-l
+        CC65_DRV_DIR=$(CC65_HOME)
+
+        MACHCONFIG= -t $(BASE_MACHINE)
+        ifeq ($(filter $(MACHINE), apple2 apple2enh),)
+            MACHCONFIG += -C $(MACHINE).cfg
+        endif
+    else
+        export CC65_SUPPORTS_APPLE_SINGLE=1
+        CC65_CREATE_DEP_ARG=--create-dep $(@:.o=.u)
+        CC65_LIST_ARG=-l $(@:.o=.lst)
+        CC65_DRV_DIR=$(CC65_HOME)/target/$(BASE_MACHINE)/drv
+
+        MACHCONFIG= -t $(BASE_MACHINE)
+        ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+            MACHCONFIG += -C $(BASE_MACHINE)-system.cfg
+        else
+            ifeq ($(PROJECT_TYPE),ca65)
+                MACHCONFIG += -C $(BASE_MACHINE)-asm.cfg
+                LDFLAGS += -u __EXEHDR__
+            else
+                MACHCONFIG += -C $(BASE_MACHINE).cfg
+            endif
+         endif
+    endif
+
     ifneq ($(DRIVERS),)
         SRCDIRS+=$(DRVDIR)
     endif
@@ -62,23 +102,6 @@ ifeq ($(BUILD_TYPE),cc65)
 
     ifneq ($(filter $(MACHINE), apple2 apple2enh apple2-dos33 apple2enh-dos33),)
         EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
-    endif
-
-    # By default, use the a2 drivers.  If the machine is one of the enhanced
-    # targets though, use the a2e drivers.
-    DRV_BASE_MACHINE=a2
-    ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
-        DRV_BASE_MACHINE=a2e
-    endif
-
-    MACHCONFIG= -t apple2
-
-    ifneq ($(filter $(MACHINE), apple2enh apple2enh-dos33 apple2enh-system apple2enh-loader apple2enh-reboot),)
-        MACHCONFIG= -t apple2enh
-    endif
-
-    ifeq ($(filter $(MACHINE), apple2 apple2enh),)
-        MACHCONFIG += -C $(MACHINE).cfg
     endif
 else
     C_OBJS=
@@ -170,21 +193,21 @@ $(PGM): $(OBJS)
 $(OBJS): Makefile
 
 %.o:	%.c
-	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) --create-dep -c -o $@ $<
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) $(CC65_CREATE_DEP_ARG) -c -o $@ $<
 	sed -i .bak 's/\.s:/.o:/' $(@:.o=.u)
 	rm -f $(@:.o=.u).bak
 
 %.o:	%.s
-	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) -l -c -o $@ $<
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) $(CC65_LIST_ARG) -c -o $@ $<
 
 
 .PHONY: loresgr hiresgr auxmem joystick mouse serial
 # Lores driver codegen
 loresgr: $(DRVDIR)/a2_lores_drv.s $(DRVDIR)/a2_lores_drv.h
 
-$(DRVDIR)/a2_lores_drv.s: $(CC65_HOME)/tgi/$(DRV_BASE_MACHINE).lo.tgi
+$(DRVDIR)/a2_lores_drv.s: $(CC65_DRV_DIR)/tgi/$(DRV_BASE_MACHINE).lo.tgi
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_lores_drv -o $@ $(CC65_HOME)/tgi/$(DRV_BASE_MACHINE).lo.tgi
+	$(CO65) --code-label _a2_lores_drv -o $@ $(CC65_DRV_DIR)/tgi/$(DRV_BASE_MACHINE).lo.tgi
 
 $(DRVDIR)/a2_lores_drv.h:
 	mkdir -p $(DRVDIR)
@@ -195,9 +218,9 @@ $(DRVDIR)/a2_lores_drv.h:
 # Hires driver codegen
 hiresgr: $(DRVDIR)/a2_hires_drv.s $(DRVDIR)/a2_hires_drv.h
 
-$(DRVDIR)/a2_hires_drv.s: $(CC65_HOME)/tgi/$(DRV_BASE_MACHINE).hi.tgi
+$(DRVDIR)/a2_hires_drv.s: $(CC65_DRV_DIR)/tgi/$(DRV_BASE_MACHINE).hi.tgi
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_hires_drv -o $@ $(CC65_HOME)/tgi/$(DRV_BASE_MACHINE).hi.tgi
+	$(CO65) --code-label _a2_hires_drv -o $@ $(CC65_DRV_DIR)/tgi/$(DRV_BASE_MACHINE).hi.tgi
 
 $(DRVDIR)/a2_hires_drv.h:
 	mkdir -p $(DRVDIR)
@@ -208,9 +231,9 @@ $(DRVDIR)/a2_hires_drv.h:
 # Auxmem driver codegen
 auxmem: $(DRVDIR)/a2_auxmem_drv.s $(DRVDIR)/a2_auxmem_drv.h
 
-$(DRVDIR)/a2_auxmem_drv.s: $(CC65_HOME)/emd/$(DRV_BASE_MACHINE).auxmem.emd
+$(DRVDIR)/a2_auxmem_drv.s: $(CC65_DRV_DIR)/emd/$(DRV_BASE_MACHINE).auxmem.emd
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_auxmem_drv -o $@ $(CC65_HOME)/emd/$(DRV_BASE_MACHINE).auxmem.emd
+	$(CO65) --code-label _a2_auxmem_drv -o $@ $(CC65_DRV_DIR)/emd/$(DRV_BASE_MACHINE).auxmem.emd
 
 $(DRVDIR)/a2_auxmem_drv.h:
 	mkdir -p $(DRVDIR)
@@ -221,9 +244,9 @@ $(DRVDIR)/a2_auxmem_drv.h:
 # Joystick driver codegen
 joystick: $(DRVDIR)/a2_joystick_drv.s $(DRVDIR)/a2_joystick_drv.h
 
-$(DRVDIR)/a2_joystick_drv.s: $(CC65_HOME)/joy/$(DRV_BASE_MACHINE).stdjoy.joy
+$(DRVDIR)/a2_joystick_drv.s: $(CC65_DRV_DIR)/joy/$(DRV_BASE_MACHINE).stdjoy.joy
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_joystick_drv -o $@ $(CC65_HOME)/joy/$(DRV_BASE_MACHINE).stdjoy.joy
+	$(CO65) --code-label _a2_joystick_drv -o $@ $(CC65_DRV_DIR)/joy/$(DRV_BASE_MACHINE).stdjoy.joy
 
 $(DRVDIR)/a2_joystick_drv.h:
 	mkdir -p $(DRVDIR)
@@ -234,9 +257,9 @@ $(DRVDIR)/a2_joystick_drv.h:
 # Mouse driver codegen
 mouse: $(DRVDIR)/a2_mouse_drv.s $(DRVDIR)/a2_mouse_drv.h
 
-$(DRVDIR)/a2_mouse_drv.s: $(CC65_HOME)/mou/$(DRV_BASE_MACHINE).stdmou.mou
+$(DRVDIR)/a2_mouse_drv.s: $(CC65_DRV_DIR)/mou/$(DRV_BASE_MACHINE).stdmou.mou
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_mouse_drv -o $@ $(CC65_HOME)/mou/$(DRV_BASE_MACHINE).stdmou.mou
+	$(CO65) --code-label _a2_mouse_drv -o $@ $(CC65_DRV_DIR)/mou/$(DRV_BASE_MACHINE).stdmou.mou
 
 $(DRVDIR)/a2_mouse_drv.h:
 	mkdir -p $(DRVDIR)
@@ -247,9 +270,9 @@ $(DRVDIR)/a2_mouse_drv.h:
 # Serial driver codegen
 serial: $(DRVDIR)/a2_serial_drv.s $(DRVDIR)/a2_serial_drv.h
 
-$(DRVDIR)/a2_serial_drv.s: $(CC65_HOME)/ser/$(DRV_BASE_MACHINE).ssc.ser
+$(DRVDIR)/a2_serial_drv.s: $(CC65_DRV_DIR)/ser/$(DRV_BASE_MACHINE).ssc.ser
 	mkdir -p $(DRVDIR)
-	$(CO65) --code-label _a2_serial_drv -o $@ $(CC65_HOME)/ser/$(DRV_BASE_MACHINE).ssc.ser
+	$(CO65) --code-label _a2_serial_drv -o $@ $(CC65_DRV_DIR)/ser/$(DRV_BASE_MACHINE).ssc.ser
 
 $(DRVDIR)/a2_serial_drv.h:
 	mkdir -p $(DRVDIR)

@@ -116,7 +116,7 @@
 				</array>
 			<key>Path</key>
 			<string>___PACKAGENAME___.xcscheme</string>
-		</dict>
+                </dict>
 	</dict>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
