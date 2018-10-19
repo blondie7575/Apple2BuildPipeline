@@ -114,3 +114,5 @@ Acknowledgements:
 -----------------
 
 Thanks to Quinn Dunki and Carrington Vanston who were instrumental in getting this working.  [Carrington's presentation](http://monsterfeet.com/kfest/) at KansasFest 2014 is where the basic concepts of a better Apple II build environment were demonstrated.  [Quinn built on that](http://quinndunki.com/blondihacks/?p=1904) and included support for automatically starting the program in Virtual II using Applescript.  Without their work, I wouldn't have been able to create this.  Thanks!
+
+Kris Kennaway provided some patches to the build pipeline providing cc65 v2.17 support.  This was instrumental in getting v2.6 of the build pipeline released.  I appreciate the support.
