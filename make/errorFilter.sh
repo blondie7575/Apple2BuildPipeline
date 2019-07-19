@@ -35,7 +35,7 @@ while (<FILE>) {
                 $file =~ s/\.s$/.c/;
             }
 
-            $_ = "$pwd/$file:$lineno:0: Error: $unresolvedRefError";
+            $_ = "$pwd/$file:$lineno:0: error: $unresolvedRefError";
         } else {
             $unresolvedRefError = undef;
         }
@@ -49,7 +49,7 @@ while (<FILE>) {
         my $lineno = $2;
         my $error = $3;
 
-        $_ = "$pwd/$file:$lineno:0:$error";
+        $_ = "$pwd/$file:$lineno:0: error: $error";
     }
     print STDERR "$_\n";
 }
