@@ -18,7 +18,7 @@ cp -R make $TMPDIR/Templates/'Apple II/Apple II Basic Project.xctemplate/'
 
 cp -R make $TMPDIR/Templates/'Apple II/Apple II Merlin Project.xctemplate/'
 
-pkgbuild --root $TMPDIR --version 2.6 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
+pkgbuild --root $TMPDIR --version 2.7 --identifier com.halcyontouch.Apple2Template.pkg --install-location /Library/Developer/Xcode/ --scripts pkg/scripts/ AppleXcodeTemplate.pkg
 productbuild --distribution pkg/Distribution.xml --resource ./pkg temp.pkg
 rm AppleXcodeTemplate.pkg
 productsign --sign "Developer ID Installer" temp.pkg AppleXcodeTemplate.pkg
