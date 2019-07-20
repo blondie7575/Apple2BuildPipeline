@@ -179,7 +179,7 @@
                                 <key>GCC_PREPROCESSOR_DEFINITIONS</key>
                                 <string>__fastcall__=""</string>
                                 <key>HEADER_SEARCH_PATHS</key>
-                                <string>/usr/local/lib/cc65/include /usr/local/share/cc65/include</string>
+                                <string>$TEMP_ROOT/___PACKAGENAME___.build/$CONFIGURATION/___PACKAGENAME___.build/DerivedSources /usr/local/share/cc65/include</string>
                         </dict>
                         <key>BuildPhases</key>
                         <array>

@@ -14,12 +14,14 @@ BUILD_TYPE := $(shell if echo $(MACHINE) | grep -q -- -basic; then echo basic; e
 
 CWD=$(shell pwd)
 
-DISKIMAGE=$(PGM).dsk
+DISKIMAGE=$(TARGETDIR)/$(PGM).dsk
 
 EXECCMD=
 
-BASIC_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.bas, $(SRCDIRS))))
-BASIC_OBJS=$(BASIC_SRCS:.bas=.tok)
+vpath $(GENDIR)
+
+BASIC_SRCS=$(patsubst $(GENDIR)/%, %, $(patsubst ./%, %, $(wildcard $(addsuffix /*.bas, $(SRCDIRS)))))
+BASIC_OBJS=$(patsubst %.bas, $(TARGETDIR)/%.tok, $(BASIC_SRCS))
 
 ifeq ($(BUILD_TYPE),cc65)
     export PATH := $(PATH):$(CC65_BIN)
@@ -33,50 +35,37 @@ ifeq ($(BUILD_TYPE),cc65)
         BASE_MACHINE = apple2enh
     endif
 
-    CC65_VERSION := $(shell $(CC65) --version 2>&1 | grep '^cc65 V')
+    export CC65_SUPPORTS_APPLE_SINGLE=1
+    CC65_CREATE_DEP_ARG=--create-dep $(@:.o=.u)
+    CC65_LIST_ARG=-l $(@:.o=.lst)
+    CC65_DRV_DIR=$(CC65_HOME)/target/$(BASE_MACHINE)/drv
 
-    ifeq ($(CC65_VERSION),cc65 V2.13.3)
-        export CC65_SUPPORTS_APPLE_SINGLE=0
-        CC65_CREATE_DEP_ARG=--create-dep
-        CC65_LIST_ARG=-l
-        CC65_DRV_DIR=$(CC65_HOME)
-
-        MACHCONFIG= -t $(BASE_MACHINE)
-        ifeq ($(filter $(MACHINE), apple2 apple2enh),)
-            MACHCONFIG += -C $(MACHINE).cfg
-        endif
+    MACHCONFIG= -t $(BASE_MACHINE)
+    ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
+        MACHCONFIG += -C $(BASE_MACHINE)-system.cfg
     else
-        export CC65_SUPPORTS_APPLE_SINGLE=1
-        CC65_CREATE_DEP_ARG=--create-dep $(@:.o=.u)
-        CC65_LIST_ARG=-l $(@:.o=.lst)
-        CC65_DRV_DIR=$(CC65_HOME)/target/$(BASE_MACHINE)/drv
-
-        MACHCONFIG= -t $(BASE_MACHINE)
-        ifneq ($(filter $(MACHINE), apple2-system apple2enh-system),)
-            MACHCONFIG += -C $(BASE_MACHINE)-system.cfg
+        ifeq ($(PROJECT_TYPE),ca65)
+            MACHCONFIG += -C $(BASE_MACHINE)-asm.cfg
+            LDFLAGS += -u __EXEHDR__
         else
-            ifeq ($(PROJECT_TYPE),ca65)
-                MACHCONFIG += -C $(BASE_MACHINE)-asm.cfg
-                LDFLAGS += -u __EXEHDR__
-            else
-                MACHCONFIG += -C $(BASE_MACHINE).cfg
-            endif
-         endif
+            MACHCONFIG += -C $(BASE_MACHINE).cfg
+        endif
     endif
 
+    CFLAGS+=-I $(GENDIR)
     ifneq ($(DRIVERS),)
         SRCDIRS+=$(DRVDIR)
     endif
 
-    C_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.c, $(SRCDIRS))))
-    C_OBJS=$(C_SRCS:.c=.o)
-    C_DEPS=$(C_SRCS:.c=.u)
+    C_SRCS=$(patsubst $(GENDIR)/%, %, $(patsubst ./%, %, $(wildcard $(addsuffix /*.c, $(SRCDIRS)))))
+    C_OBJS=$(patsubst %.c, $(OBJDIR)/%.o, $(C_SRCS))
+    C_DEPS=$(patsubst %.c, $(OBJDIR)/%.u, $(C_SRCS))
 
-    ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
-    ASM_OBJS=$(ASM_SRCS:.s=.o)
-    ASM_LSTS=$(ASM_SRCS:.s=.lst)
+    ASM_SRCS=$(patsubst $(GENDIR)/%, %, $(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS)))))
+    ASM_OBJS=$(patsubst %.s, $(OBJDIR)/%.o, $(ASM_SRCS))
+    ASM_LSTS=$(patsubst %.s, $(OBJDIR)/%.lst, $(ASM_SRCS))
 
-    MAPFILE=$(PGM).map
+    MAPFILE=$(TARGETDIR)/$(PGM).map
 
     ifneq ($(START_ADDR),)
         # If the MACHINE is set to an option which does not support a variable
@@ -113,7 +102,7 @@ endif
 
 ifeq ($(BUILD_TYPE),merlin)
     ASM_SRCS=$(patsubst ./%, %, $(wildcard $(addsuffix /*.s, $(SRCDIRS))))
-    MAPFILE=_Output.txt
+    MAPFILE=$(TARGETDIR)/_Output.txt
     EXECCMD=$(shell echo brun $(PGM) | tr '[a-z]' '[A-Z]')
 endif
 
@@ -122,7 +111,7 @@ ifeq ($(BUILD_TYPE),basic)
     EXECCMD=$(shell echo run $(PGM) | tr '[a-z]' '[A-Z]')
 endif
 
-OBJS=$(C_OBJS) $(ASM_OBJS) $(BASIC_OBJS)
+OBJS=$(C_OBJS) $(ASM_OBJS)
 
 ALLTARGET=$(DISKIMAGE)
 
@@ -131,13 +120,14 @@ ALLTARGET=$(DISKIMAGE)
 
 build: $(ALLTARGET)
 
-$(DISKIMAGE): $(PGM)
-	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(PGM)" "$(START_ADDR)" $(BASIC_OBJS) $(COPYDIRS)
+$(DISKIMAGE): $(TARGETDIR)/$(PGM) $(BASIC_OBJS)
+	make/createDiskImage $(AC) $(MACHINE) "$(DISKIMAGE)" "$(TARGETDIR)/$(PGM)" "$(START_ADDR)" $(BASIC_OBJS) $(COPYDIRS)
 
 execute: $(DISKIMAGE)
-	osascript make/V2Make.scpt "$(CWD)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
+	osascript make/V2Make.scpt "$(TARGETDIR)" "$(PGM)" "$(CWD)/make/DevApple.vii" "$(EXECCMD)"
 
-%.tok:	%.bas
+$(TARGETDIR)/%.tok:	%.bas
+	$(MKDIR) `dirname $@`
 	make/bt $< $(BASICFLAGS) -o $@
 
 ifneq ($(DRIVERS),)
@@ -150,7 +140,7 @@ cleandrivers:
 endif
 
 clean: genclean cleandrivers
-	rm -f "$(PGM)" $(OBJS) $(C_DEPS) $(MAPFILE) $(ASM_LSTS) "$(DISKIMAGE)"
+	rm -f "$(TARGETDIR)/$(PGM)" $(OBJS) $(BASIC_OBJS) $(C_DEPS) $(MAPFILE) $(ASM_LSTS) "$(DISKIMAGE)"
 
 cleanMacCruft:
 	rm -rf pkg
@@ -165,10 +155,10 @@ xcodefix:
 ifeq ($(BUILD_TYPE),basic)
 # Build rules for BASIC projects
 
-$(PGM): $(OBJS)
-	cp $(PGM).tok $(PGM)
+$(TARGETDIR)/$(PGM): $(BASIC_OBJS)
+	cp $(TARGETDIR)/$(PGM).tok $(TARGETDIR)/$(PGM)
 
-$(OBJS): Makefile
+$(BASIC_OBJS): Makefile
 
 
 endif
@@ -177,9 +167,10 @@ endif
 ifeq ($(BUILD_TYPE),merlin)
 # Build rules for Merlin projects
 
-$(PGM): $(ASM_SRCS) Makefile
-	$(MERLIN_BIN) -V $(MERLIN_LIB) linkscript.s
-	rm -f _FileInformation.txt
+$(TARGETDIR)/$(PGM): $(ASM_SRCS) Makefile
+	$(MKDIR) $(TARGETDIR)
+	rm -f $(TARGETDIR)/$(PGM)
+	$(MERLIN_ASM) linkscript.s $(PGM) $(TARGETDIR)/$(PGM)
 
 endif
 
@@ -187,17 +178,30 @@ endif
 ifeq ($(BUILD_TYPE),cc65)
 # Build rules for cc65 projects
 
-$(PGM): $(OBJS)
-	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(PGM)" $(OBJS)
+$(TARGETDIR)/$(PGM): $(OBJS)
+	$(MKDIR) `dirname $@`
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --mapfile $(MAPFILE) $(LDFLAGS) -o "$(TARGETDIR)/$(PGM)" $(OBJS)
 
 $(OBJS): Makefile
 
-%.o:	%.c
+$(OBJDIR)/%.o:    %.c
+	$(MKDIR) `dirname $@`
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) $(CC65_CREATE_DEP_ARG) -c -o $@ $<
 	sed -i .bak 's/\.s:/.o:/' $(@:.o=.u)
 	rm -f $(@:.o=.u).bak
 
-%.o:	%.s
+$(OBJDIR)/%.o:	$(GENDIR)/%.c
+	$(MKDIR) `dirname $@`
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) $(CFLAGS) $(CC65_CREATE_DEP_ARG) -c -o $@ $<
+	sed -i .bak 's/\.s:/.o:/' $(@:.o=.u)
+	rm -f $(@:.o=.u).bak
+
+$(OBJDIR)/%.o:	%.s
+	$(MKDIR) `dirname $@`
+	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) $(CC65_LIST_ARG) -c -o $@ $<
+
+$(OBJDIR)/%.o:    $(GENDIR)/%.s
+	$(MKDIR) `dirname $@`
 	make/errorFilter.sh $(CL65) $(MACHCONFIG) --cpu $(CPU) $(ASMFLAGS) $(CC65_LIST_ARG) -c -o $@ $<
 
 

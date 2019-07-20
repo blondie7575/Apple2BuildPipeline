@@ -15,6 +15,7 @@
 		<string>make/dos33_template.dsk</string>
 		<string>make/errorFilter.sh</string>
 		<string>make/head.mk</string>
+		<string>make/merlin-asm</string>
 		<string>make/prodos_template.dsk</string>
 		<string>make/tail.mk</string>
                 <string>make/V2Make.scpt</string>
@@ -45,6 +46,13 @@
 			<string>make</string>
 			<key>Path</key>
 			<string>make/errorFilter.sh</string>
+		</dict>
+		<key>make/merlin-asm</key>
+		<dict>
+			<key>Group</key>
+			<string>make</string>
+			<key>Path</key>
+                        <string>make/merlin-asm</string>
 		</dict>
 		<key>make/tail.mk</key>
 		<dict>
@@ -185,7 +193,7 @@
                                 <key>GCC_PREPROCESSOR_DEFINITIONS</key>
                                 <string>__fastcall__=""</string>
                                 <key>HEADER_SEARCH_PATHS</key>
-                                <string>/usr/local/lib/cc65/include /usr/local/share/cc65/include</string>
+                                <string>$TEMP_ROOT/___PACKAGENAME___.build/$CONFIGURATION/___PACKAGENAME___.build/DerivedSources /usr/local/share/cc65/include</string>
                         </dict>
                         <key>BuildPhases</key>
                         <array>
