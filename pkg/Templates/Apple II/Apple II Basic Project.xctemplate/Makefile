@@ -24,7 +24,8 @@ MACHINE = apple2-basic
 #    MACHINE = apple2-dos33-basic
 
 # Add any other directories where you are putting other BASIC files 
-# to this list:
+# to this list.  Note that if you are generating source files into
+# $(GENDIR), you should add $(GENDIR) to SRCDIRS here:
 SRCDIRS+=
 
 # If you want to add arguments to the BASIC tokenizer commandline,
@@ -70,6 +71,13 @@ COPYDIRS=
 # commands are called here, if any.  You can generate .c, .s or .h
 # files for example.  You can generate data files.  Whatever you
 # might need.
+#
+# You should generate these files in the $(GENDIR) directory or
+# within a subdirectory under $(GENDIR) which you create yourself.
+#
+# All of your commands associated with a rule _must_ start with a tab
+# character.  Xcode makes it a bit tough to type a tab character by
+# default.  Press option-tab within Xcode to insert a tab character.
 gen:
 
 # For any files you generated in the gen target above, you should

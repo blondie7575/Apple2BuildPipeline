@@ -41,7 +41,8 @@ MACHINE = apple2-merlin
 # files to this list.  Note that you must manually add all source files
 # to the linkscript.s file.  All this does is help the build system
 # see what files it should consider important to deciding whether to do
-# a re-build.
+# a re-build.  Note that if you are generating source files into
+# $(GENDIR), you should add $(GENDIR) to SRCDIRS here:
 SRCDIRS+=
 
 # If you want to add arguments to the BASIC tokenizer commandline,
@@ -87,6 +88,13 @@ COPYDIRS=
 # commands are called here, if any.  You can generate .c, .s or .h
 # files for example.  You can generate data files.  Whatever you
 # might need.
+#
+# You should generate these files in the $(GENDIR) directory or
+# within a subdirectory under $(GENDIR) which you create yourself.
+#
+# All of your commands associated with a rule _must_ start with a tab
+# character.  Xcode makes it a bit tough to type a tab character by
+# default.  Press option-tab within Xcode to insert a tab character.
 gen:
 
 # For any files you generated in the gen target above, you should
