@@ -363,9 +363,9 @@ do
         # If the file type is text, convert the line feeds to carriage return
         if [ $FILETYPE = txt ] || [ $FILETYPE = T ]
         then
-            tr '\n' '\r' < $FILE | "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$OLDPWD/$DISKIMAGE" "$DESTFILE" $FILETYPE
+            tr '\n' '\r' < $FILE | "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$DISKIMAGE" "$DESTFILE" $FILETYPE
         else
-            "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$OLDPWD/$DISKIMAGE" "$DESTFILE" $FILETYPE < $FILE
+            "$JAVA" -jar "$OLDPWD/$APPLECOMMANDER" $TRANSFERARG "$DISKIMAGE" "$DESTFILE" $FILETYPE < $FILE
         fi
     done
 
