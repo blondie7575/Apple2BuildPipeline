@@ -1,0 +1,181 @@
+// Applesoft BASIC language specs
+(
+
+/****************************************************************************/
+// MARK: Keywords
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.basic.applesoft.identifier";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Type = "xcode.syntax.identifier";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.basic.applesoft.keyword";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$";
+            Words = (
+                "NEW",
+                "CLEAR",
+                "LIST",
+                "RUN",
+                "LOAD",
+                "SAVE",
+
+                "DIM",
+
+                "AND",
+                "OR",
+                "NOT",
+
+                "ABS",
+                "SGN",
+                "INT",
+                "SQR",
+                "SIN",
+                "COS",
+                "TAN",
+                "ATN",
+                "EXP",
+                "LOG",
+                "RND",
+                "DEF",
+
+                "LEN",
+                "LEFT$",
+                "MID$",
+                "RIGHT$",
+                "STR$",
+                "VAL",
+                "CHR$",
+                "ASC",
+
+                "GOTO",
+                "ON",
+                "IF",
+                "THEN",
+                "FOR",
+                "TO",
+                "STEP",
+                "NEXT",
+                "GOSUB",
+                "RETURN",
+                "POP",
+                "ONERR",
+                "RESUME",
+                "STOP",
+                "CONT",
+                "END",
+
+                "PEEK",
+                "POKE",
+                "CALL",
+                "USR",
+                "HIMEM",
+                "LOMEM",
+                "FRE",
+                "TRACE",
+                "NOTRACE",
+
+                "GR",
+                "COLOR",
+                "PLOT",
+                "HLIN",
+                "VLIN",
+                "SCRN",
+                "HGR",
+                "HGR2",
+                "HCOLOR",
+                "HPLOT",
+                "DRAW",
+                "AT",
+                "XDRAW",
+                "SCALE",
+                "ROT",
+
+                "IN#",
+                "INPUT",
+                "GET",
+                "READ",
+                "DATA",
+                "RESTORE",
+                "PDL",
+                "PR#",
+                "PRINT",
+                "TEXT",
+                "HOME",
+                "HTAB",
+                "VTAB",
+                "INVERSE",
+                "NORMAL",
+                "FLASH"
+            );
+            Type = "xcode.syntax.keyword";
+            AltType = "xcode.syntax.identifier";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Simple Syntax Coloring
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.basic.applesoft";
+        Description = "Applesoft BASIC Coloring";
+        BasedOn = "xcode.lang.simpleColoring";
+        IncludeInMenu = YES;
+        Name = "Applesoft BASIC";
+        Syntax = {
+            Tokenizer = "xcode.lang.basic.applesoft.lexer";
+            IncludeRules = (
+                "xcode.lang.basic.applesoft.codeblock",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+    {
+        Identifier = "xcode.lang.basic.applesoft.lexer";
+        Syntax = {
+            IncludeRules = (
+                "xcode.lang.basic.applesoft.comment.rem",
+                "xcode.lang.string",
+                "xcode.lang.character",
+                "xcode.lang.number",
+                "xcode.lang.basic.applesoft.keyword",
+                "xcode.lang.basic.applesoft.identifier",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.basic.applesoft.comment.rem";
+        Syntax = {
+            Start = "REM";
+            End = "\n";
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.basic.applesoft.codeblock";
+        Syntax = {
+            Tokenizer = "xcode.lang.applesoft.lexer.lexer";
+            Start = "{";
+            End = "}";
+            Recursive = YES;
+            Foldable = YES;
+            Type = "xcode.syntax.definition.function";
+            IncludeRules = (
+            );
+        };
+    },
+
+)

@@ -1,0 +1,334 @@
+// ca65 Assembler language specs
+(
+
+/****************************************************************************/
+// MARK: Keywords
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.asm.ca65.identifier";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Type = "xcode.syntax.identifier";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.ca65.keyword";
+        Syntax = {
+            CaseSensitive = NO;
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_~";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_~";
+            Words = (
+                "adc",
+                "and",
+                "asl",
+                "bcc",
+                "bcs",
+                "beq",
+                "bge",
+                "bit",
+                "blt",
+                "bmi",
+                "bne",
+                "bpl",
+                "bra",
+                "brk",
+                "brl",
+                "bvc",
+                "bvs",
+                "clc",
+                "cld",
+                "cli",
+                "clv",
+                "cmp",
+                "cop",
+                "cpa",
+                "cpx",
+                "cpy",
+                "dec",
+                "dex",
+                "dey",
+                "eor",
+                "inc",
+                "inx",
+                "iny",
+                "jmp",
+                "jsl",
+                "jsr",
+                "lda",
+                "ldx",
+                "ldy",
+                "lsr",
+                "mvn",
+                "mvp",
+                "nop",
+                "ora",
+                "pea",
+                "pei",
+                "per",
+                "pha",
+                "phb",
+                "phd",
+                "phk",
+                "php",
+                "phx",
+                "phy",
+                "pla",
+                "plb",
+                "pld",
+                "plp",
+                "plx",
+                "ply",
+                "rep",
+                "rol",
+                "ror",
+                "rti",
+                "rtl",
+                "rts",
+                "sbc",
+                "sec",
+                "sed",
+                "sei",
+                "sep",
+                "sta",
+                "stp",
+                "stx",
+                "sty",
+                "stz",
+                "tax",
+                "tay",
+                "tcd",
+                "tcs",
+                "tdc",
+                "trb",
+                "tsb",
+                "tsc",
+                "tsx",
+                "txa",
+                "txs",
+                "txy",
+                "tya",
+                "tyx",
+                "wai",
+                "wdm",
+                "xba",
+                "xce",
+
+                ".asize",
+                ".cpu",
+                ".isize",
+                ".paramcount",
+                ".time",
+                ".version",
+
+                ".addrsize",
+                ".bank",
+                ".bankbyte",
+                ".blank",
+                ".concat",
+                ".const",
+                ".hibyte",
+                ".hiword",
+                ".ident",
+                ".left",
+                ".lobyte",
+                ".loword",
+                ".match",
+                ".max",
+                ".mid",
+                ".min",
+                ".ref",
+                ".referenced",
+                ".right",
+                ".sizeof",
+                ".strat",
+                ".sprintf",
+                ".string",
+                ".strlen",
+                ".tcount",
+                ".xmatch",
+
+                ".a16",
+                ".a8",
+                ".addr",
+                ".align",
+                ".asciiz",
+                ".assert",
+                ".autoimport",
+                ".bankbytes",
+                ".bss",
+                ".byt",
+                ".byte",
+                ".case",
+                ".charmap",
+                ".code",
+                ".condes",
+                ".constructor",
+                ".data",
+                ".dbyt",
+                ".debuginfo",
+                ".define",
+                ".delmac",
+                ".delmacro",
+                ".def",
+                ".defined",
+                ".definemacro",
+                ".destructor",
+                ".dword",
+                ".else",
+                ".elseif",
+                ".end",
+                ".endenum",
+                ".endif",
+                ".endmac",
+                ".endmacro",
+                ".endproc",
+                ".endrep",
+                ".endrepeat",
+                ".endscope",
+                ".endstruct",
+                ".endunion",
+                ".enum",
+                ".error",
+                ".exitmac",
+                ".exitmacro",
+                ".export",
+                ".exportzp",
+                ".faraddr",
+                ".fatal",
+                ".feature",
+                ".fileopt",
+                ".fopt",
+                ".forceimport",
+                ".global",
+                ".globalzp",
+                ".hibytes",
+                ".i16",
+                ".i8",
+                ".if",
+                ".ifblank",
+                ".ifconst",
+                ".ifdef",
+                ".ifnblank",
+                ".ifndef",
+                ".ifnref",
+                ".ifp02",
+                ".ifp4510",
+                ".ifp816",
+                ".ifpc02",
+                ".ifpsc02",
+                ".ifref",
+                ".import",
+                ".importzp",
+                ".incbin",
+                ".include",
+                ".interruptor",
+                ".ismnem",
+                ".ismnemonic",
+                ".linecont",
+                ".list",
+                ".listbytes",
+                ".lobytes",
+                ".local",
+                ".localchar",
+                ".macpack",
+                ".mac",
+                ".macro",
+                ".org",
+                ".out",
+                ".p02",
+                ".p4510",
+                ".p816",
+                ".pagelen",
+                ".pagelength",
+                ".pc02",
+                ".popcpu",
+                ".popseg",
+                ".proc",
+                ".psc02",
+                ".pushcpu",
+                ".pushseg",
+                ".reloc",
+                ".repeat",
+                ".res",
+                ".rodata",
+                ".scope",
+                ".segment",
+                ".set",
+                ".setcpu",
+                ".smart",
+                ".struct",
+                ".tag",
+                ".undef",
+                ".undefine",
+                ".union",
+                ".warning",
+                ".word",
+                ".zeropage"
+            );
+            Type = "xcode.syntax.keyword";
+            AltType = "xcode.syntax.identifier";
+        };
+    },
+
+/****************************************************************************/
+// MARK: Simple Syntax Coloring
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.asm.ca65";
+        Description = "ca65 Assembler Coloring";
+        BasedOn = "xcode.lang.simpleColoring";
+        IncludeInMenu = YES;
+        Name = "Assembly (ca65)";
+        Syntax = {
+            Tokenizer = "xcode.lang.asm.ca65.lexer";
+            IncludeRules = (
+                "xcode.lang.asm.ca65.codeblock",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+    {
+        Identifier = "xcode.lang.asm.ca65.lexer";
+        Syntax = {
+            IncludeRules = (
+                "xcode.lang.asm.ca65.comment.semi",
+                "xcode.lang.string",
+                "xcode.lang.character",
+                "xcode.lang.number",
+                "xcode.lang.asm.ca65.keyword",
+                "xcode.lang.asm.ca65.identifier",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.asm.ca65.comment.semi";
+        Syntax = {
+            StartAtBOL = YES;
+            StartAtColumnZero = YES;
+            Start = ";";
+            End = "\n";
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.asm.ca65.codeblock";
+        Syntax = {
+            Tokenizer = "xcode.lang.asm.ca65.lexer";
+            Start = ".proc";
+            End = ".endproc";
+            Recursive = NO;
+            Foldable = YES;
+            Type = "xcode.syntax.definition.function";
+            IncludeRules = (
+            );
+        };
+    },
+)

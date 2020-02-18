@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <title>Apple II XCode Template</title>
+    <pkg-ref id="com.halcyontouch.Apple2Template.pkg"/>
+    <options customize="never" require-scripts="false"/>
+    <domains enable_currentUserHome="true"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.halcyontouch.Apple2Template.pkg"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.halcyontouch.Apple2Template.pkg" visible="false">
+        <pkg-ref id="com.halcyontouch.Apple2Template.pkg"/>
+    </choice>
+    <pkg-ref id="com.halcyontouch.Apple2Template.pkg" version="1.1" onConclusion="none">AppleXcodeTemplate.pkg</pkg-ref>
+</installer-gui-script>
